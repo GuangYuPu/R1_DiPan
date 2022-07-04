@@ -44,3 +44,5 @@ r1_dipan\main.o: ..\UART_COM\nrf_com.h
 r1_dipan\main.o: ..\UC\Caculate.h
 r1_dipan\main.o: ..\UC\DJI.h
 r1_dipan\main.o: ..\UC\wtr_can.h
+r1_dipan\main.o: ..\ADS\ADS1256.h
+r1_dipan\main.o: D:\MDK\ARM\ARMCC\Bin\..\include\stdio.h

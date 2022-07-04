@@ -34,6 +34,8 @@
 "r1_dipan\dji.o"
 "r1_dipan\wtr_can.o"
 "r1_dipan\wtr_uart.o"
+"r1_dipan\ads1256.o"
+"r1_dipan\tith_time.o"
 --library_type=microlib --strict --scatter "R1_DiPan\R1_DiPan.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

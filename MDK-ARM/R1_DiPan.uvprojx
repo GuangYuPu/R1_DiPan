@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;   ../Drivers/STM32F4xx_HAL_Driver/Inc;   ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;   ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;   ../Drivers/CMSIS/Include;   ..\UC;   ..\UART_COM;   ..\omni</IncludePath>
+              <IncludePath>../Core/Inc;   ../Drivers/STM32F4xx_HAL_Driver/Inc;   ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;   ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;   ../Drivers/CMSIS/Include;   ..\UC;   ..\UART_COM;   ..\omni;   ..\ADS;   ..\TITH_time</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -577,6 +577,16 @@
               <FileName>wtr_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\UC\wtr_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADS1256.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ADS\ADS1256.c</FilePath>
+            </File>
+            <File>
+              <FileName>TITH_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\TITH_time\TITH_time.c</FilePath>
             </File>
           </Files>
         </Group>

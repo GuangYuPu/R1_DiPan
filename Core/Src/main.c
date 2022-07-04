@@ -33,6 +33,7 @@
 #include "Caculate.h"
 #include "DJI.h"
 #include "wtr_can.h"
+#include "ADS1256.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -124,7 +125,7 @@ int main(void)
 	
 	ifRecv = 0;
 	
-	
+	ADS1256_Init();
 	
 	HAL_TIM_Base_Start_IT(&htim4);
 	HAL_TIM_Base_Start_IT(&htim5);
@@ -138,6 +139,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		ADS1256_UpdateDiffData();
+		
 		robot_vx = ((float)(2048 - Leftx))/500;
 	  robot_vy = ((float)(2048 - Lefty))/500;
 	  robot_rot = ((float)(Rightx - 2048))/500;
