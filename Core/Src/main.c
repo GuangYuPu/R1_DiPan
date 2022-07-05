@@ -139,11 +139,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		while(!ifRecv)
+		{
+		}
 		ADS1256_UpdateDiffData();
 		
-		robot_vx = ((float)(2048 - Leftx))/500;
-	  robot_vy = ((float)(2048 - Lefty))/500;
-	  robot_rot = ((float)(Rightx - 2048))/500;
+		robot_vx = ((float)(2048 - Leftx))*3;
+	  robot_vy = ((float)(2048 - Lefty))*3;
+	  robot_rot = -((float)(Rightx - 2048))*5;
 		
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
