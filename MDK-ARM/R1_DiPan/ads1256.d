@@ -38,4 +38,4 @@ r1_dipan\ads1256.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 r1_dipan\ads1256.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 r1_dipan\ads1256.o: ../Core/Inc/spi.h
 r1_dipan\ads1256.o: ..\ADS\ADS1256_Config.h
-r1_dipan\ads1256.o: ..\TITH_time\TITH_time.h
+r1_dipan\ads1256.o: ../TITH_time/TITH_time.h

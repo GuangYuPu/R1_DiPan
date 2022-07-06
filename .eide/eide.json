@@ -22,10 +22,7 @@
             "./omni",
             "./ADS",
             "./TITH_time",
-            "./.cmsis/dsp_lib",
-            "./.cmsis/include",
-            "./MDK-ARM/RTE/_R1_DiPan",
-            "./.eide/deps"
+            "./MDK-ARM/RTE/_R1_DiPan"
           ],
           "defineList": [
             "USE_HAL_DRIVER",
@@ -485,8 +482,6 @@
           "omni",
           "ADS",
           "TITH_time",
-          ".cmsis/dsp_lib",
-          ".cmsis/include",
           "MDK-ARM/RTE/_R1_DiPan"
         ],
         "defineList": [

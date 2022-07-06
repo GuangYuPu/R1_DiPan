@@ -34,6 +34,7 @@
 #include "DJI.h"
 #include "wtr_can.h"
 #include "ADS1256.h"
+#include "mpu6050.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,10 +56,14 @@
 /* USER CODE BEGIN PV */
 int ifRecv;
 uint32_t time = 0;
+int b = 0;
+int a = 0;
 
 double robot_vx = 0;
 double robot_vy = 0;
 double robot_rot = 0;
+
+int32_t Bias_mpu = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,6 +112,7 @@ int main(void)
   MX_TIM4_Init();
   MX_USART1_UART_Init();
   MX_TIM5_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_15,GPIO_PIN_SET);
@@ -133,6 +139,7 @@ int main(void)
 	nrf_Transmit_init();
 	nrf_receive_init();
 
+	mpu6050_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -146,7 +153,8 @@ int main(void)
 		
 		robot_vx = ((float)(2048 - Leftx))*3;
 	  robot_vy = ((float)(2048 - Lefty))*3;
-	  robot_rot = -((float)(Rightx - 2048))*5;
+	  //robot_rot = -((float)(Rightx - 2048))*5;
+		if(Bias_mpu>50 || Bias_mpu<50)robot_rot = 3*Bias_mpu;
 		
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
@@ -174,6 +182,8 @@ int main(void)
 		nrfDataBag.button_G = button_G;
 		nrfDataBag.button_H = button_H;
 		send();
+		
+		Bias_mpu += mpu6050_databag.Wz;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -242,6 +252,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			  ifRecv = 1;
         nrf_decode();
     }
+		if(huart->Instance == huart3.Instance)
+		{
+				mpu6050_decode(&mpu6050_databag);
+		}
 }
 /* USER CODE END 4 */
 

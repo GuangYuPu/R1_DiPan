@@ -39,10 +39,11 @@ r1_dipan\main.o: ../Core/Inc/spi.h
 r1_dipan\main.o: ../Core/Inc/tim.h
 r1_dipan\main.o: ../Core/Inc/usart.h
 r1_dipan\main.o: ../Core/Inc/gpio.h
-r1_dipan\main.o: ..\omni\omni.h
-r1_dipan\main.o: ..\UART_COM\nrf_com.h
-r1_dipan\main.o: ..\UC\Caculate.h
-r1_dipan\main.o: ..\UC\DJI.h
-r1_dipan\main.o: ..\UC\wtr_can.h
-r1_dipan\main.o: ..\ADS\ADS1256.h
+r1_dipan\main.o: ../omni/omni.h
+r1_dipan\main.o: ../UART_COM/nrf_com.h
+r1_dipan\main.o: ../UC/Caculate.h
+r1_dipan\main.o: ../UC/DJI.h
+r1_dipan\main.o: ../UC/wtr_can.h
+r1_dipan\main.o: ../ADS/ADS1256.h
 r1_dipan\main.o: D:\MDK\ARM\ARMCC\Bin\..\include\stdio.h
+r1_dipan\main.o: ..\MPU6050\mpu6050.h
