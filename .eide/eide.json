@@ -22,7 +22,9 @@
             "./omni",
             "./ADS",
             "./TITH_time",
-            "./MDK-ARM/RTE/_R1_DiPan"
+            "./MPU6050",
+            "./MDK-ARM/RTE/_R1_DiPan",
+            "./MotionPlan"
           ],
           "defineList": [
             "USE_HAL_DRIVER",
@@ -153,6 +155,11 @@
     "name": "<virtual_root>",
     "files": [],
     "folders": [
+      {
+        "name": "::CMSIS",
+        "files": [],
+        "folders": []
+      },
       {
         "name": "Application",
         "files": [],
@@ -308,13 +315,11 @@
           },
           {
             "path": "TITH_time/TITH_time.c"
+          },
+          {
+            "path": "MPU6050/mpu6050.c"
           }
         ],
-        "folders": []
-      },
-      {
-        "name": "::CMSIS",
-        "files": [],
         "folders": []
       }
     ]
@@ -482,6 +487,7 @@
           "omni",
           "ADS",
           "TITH_time",
+          "MPU6050",
           "MDK-ARM/RTE/_R1_DiPan"
         ],
         "defineList": [

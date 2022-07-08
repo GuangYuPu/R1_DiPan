@@ -35,6 +35,7 @@
 #include "wtr_can.h"
 #include "ADS1256.h"
 #include "mpu6050.h"
+#include "Wtr_MotionPlan.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,9 +60,9 @@ uint32_t time = 0;
 int b = 0;
 int a = 0;
 
-double robot_vx = 0;
-double robot_vy = 0;
-double robot_rot = 0;
+float robot_vx = 0;
+float robot_vy = 0;
+float robot_rot = 0;
 
 int32_t Bias_mpu = 0;
 /* USER CODE END PV */

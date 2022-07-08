@@ -47,3 +47,4 @@ r1_dipan\main.o: ../UC/wtr_can.h
 r1_dipan\main.o: ../ADS/ADS1256.h
 r1_dipan\main.o: D:\MDK\ARM\ARMCC\Bin\..\include\stdio.h
 r1_dipan\main.o: ..\MPU6050\mpu6050.h
+r1_dipan\main.o: ..\MotionPlan\Wtr_MotionPlan.h

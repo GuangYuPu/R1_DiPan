@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../UC;../UART_COM;../omni;../ADS;../TITH_time;..\MPU6050</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../UC;../UART_COM;../omni;../ADS;../TITH_time;..\MPU6050;..\MotionPlan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -487,6 +487,11 @@
               <FileName>mpu6050.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MPU6050\mpu6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>Wtr_MotionPlan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MotionPlan\Wtr_MotionPlan.c</FilePath>
             </File>
           </Files>
         </Group>
