@@ -30,23 +30,36 @@ Warning: *** SUPPORT EXPIRED, NEW PRODUCT SERIAL NUMBER REQUIRED ***
          *** Running with Code Size Limit: 32K                   ***
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\MDK\ARM\ARMCC\Bin'
 Build target 'R1_DiPan'
-compiling mpu6050.c...
+compiling main.c...
+../omni/omni.h(21): warning:  #1-D: last line of file ends without a newline
+  #endif
+../UART_COM/nrf_com.h(80): warning:  #1295-D: Deprecated declaration nrf_Transmit_init - give arg types
+  void nrf_Transmit_init();
+../UART_COM/nrf_com.h(81): warning:  #1295-D: Deprecated declaration send - give arg types
+  void send();
+../UART_COM/nrf_com.h(82): warning:  #1295-D: Deprecated declaration nrf_receive_init - give arg types
+  void nrf_receive_init();
+../UART_COM/nrf_com.h(83): warning:  #1295-D: Deprecated declaration nrf_decode - give arg types
+  void nrf_decode();
+../UART_COM/nrf_com.h(85): warning:  #1-D: last line of file ends without a newline
+  #endif
+../UC/DJI.h(64): warning:  #1295-D: Deprecated declaration DJI_Init - give arg types
+  void DJI_Init();
+../UC/DJI.h(68): warning:  #1-D: last line of file ends without a newline
+  #endif
+../UC/Caculate.h(10): warning:  #1-D: last line of file ends without a newline
+  #endif
 ..\MPU6050\mpu6050.h(28): warning:  #1295-D: Deprecated declaration mpu6050_init - give arg types
   void mpu6050_init();
 ..\MPU6050\mpu6050.h(34): warning:  #1-D: last line of file ends without a newline
   #endif
-..\MPU6050\mpu6050.c(20): error:  #20: identifier "b" is undefined
-  	b++;
-..\MPU6050\mpu6050.c(30): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-           data->Ax = ((float)(((int16_t)(receiveData[i+3]<<8))|((int16_t)(receiveData[i+2])))/32768)*16*(9.8);
-..\MPU6050\mpu6050.c(31): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  				 data->Ay = ((float)(((int16_t)(receiveData[i+5]<<8))|((int16_t)(receiveData[i+4])))/32768)*16*(9.8);
-..\MPU6050\mpu6050.c(32): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  				 data->Az = ((float)(((int16_t)(receiveData[i+7]<<8))|((int16_t)(receiveData[i+6])))/32768)*16*(9.8);
-..\MPU6050\mpu6050.c(45): warning:  #1-D: last line of file ends without a newline
-  }
-..\MPU6050\mpu6050.c: 6 warnings, 1 error
-"R1_DiPan\R1_DiPan.axf" - 1 Error(s), 7 Warning(s).
+..\MotionPlan\Wtr_MotionPlan.h(39): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c: 12 warnings, 0 errors
+linking...
+Program Size: Code=19848 RO-data=600 RW-data=88 ZI-data=3120  
+FromELF: creating hex file...
+"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 13 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -70,7 +83,6 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Target not created.
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

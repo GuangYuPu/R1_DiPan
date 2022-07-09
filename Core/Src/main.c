@@ -36,11 +36,17 @@
 #include "ADS1256.h"
 #include "mpu6050.h"
 #include "Wtr_MotionPlan.h"
+
+#include "stdio.h"  
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+#ifdef __GNUC__
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -59,6 +65,10 @@ int ifRecv;
 uint32_t time = 0;
 int b = 0;
 int a = 0;
+
+uint8_t zone = 0;
+uint8_t qu_qiu = 0;
+uint8_t she_qiu = 0;
 
 float robot_vx = 0;
 float robot_vy = 0;
@@ -147,14 +157,16 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//		while(!ifRecv)
-//		{
-//		}
+		while(!ifRecv)
+		{
+		}
 		ADS1256_UpdateDiffData();
 		
+    
 //		robot_vx = ((float)(2048 - Leftx))*3;
 //	  robot_vy = ((float)(2048 - Lefty))*3;
 	  //robot_rot = -((float)(Rightx - 2048))*5;
+
 		if(Bias_mpu>50 || Bias_mpu<50)robot_rot = 3*Bias_mpu;
 		
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
@@ -182,9 +194,14 @@ int main(void)
 		nrfDataBag.button_F = button_F;
 		nrfDataBag.button_G = button_G;
 		nrfDataBag.button_H = button_H;
+    nrfDataBag.zone = zone;
+		nrfDataBag.qu_qiu = qu_qiu;
+		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
 		Bias_mpu += mpu6050_databag.Wz;
+
+    // printf("%d\r\n",time);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -257,6 +274,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		{
 				mpu6050_decode(&mpu6050_databag);
 		}
+}
+
+PUTCHAR_PROTOTYPE
+{
+  HAL_UART_Transmit(&huart6,(uint8_t *)&ch,1,0xFFFF);//阻塞方式打印
+  return ch;
 }
 /* USER CODE END 4 */
 

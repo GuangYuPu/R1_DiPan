@@ -2,7 +2,7 @@
 #include "main.h"
 #include "usart.h"
 
-nrfBag_t nrfDataBag;
+nrfBag_trans_t nrfDataBag;
 uint8_t nrfReceive[BAG_LENGTH*2];
 int Leftx, Lefty, Rightx, Righty; 
 uint8_t button_A,button_B,button_C,button_D,button_E,button_F,button_G,button_H;
@@ -11,7 +11,9 @@ uint8_t button_A,button_B,button_C,button_D,button_E,button_F,button_G,button_H;
 void nrf_Transmit_init()
 {
     nrfDataBag.header[0] = HEADER_HIGH;
-    nrfDataBag.header[1] = HEADER_LOW;
+    nrfDataBag.header[1] = HEADER_MIDDLE_1;
+	nrfDataBag.header[2] = HEADER_MIDDLE_2;
+	nrfDataBag.header[3] = HEADER_LOW;
 }
 
 //发送单片机发送函数，循环调用
@@ -33,8 +35,10 @@ void nrf_decode()
       {
           nrfBag_t tempBag = *(nrfBag_t*)(void*)((&nrfReceive[i]));
           if(
-              tempBag.header[0] == HEADER_HIGH    &&
-              tempBag.header[1] == HEADER_LOW  
+              tempBag.header[0] == HEADER_HIGH     &&
+              tempBag.header[1] == HEADER_MIDDLE_1 &&
+              tempBag.header[2] == HEADER_MIDDLE_2 &&
+              tempBag.header[3] == HEADER_LOW  
           ){
               Leftx = tempBag.Leftx;
               Lefty = tempBag.Lefty;
