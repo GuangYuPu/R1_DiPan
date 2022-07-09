@@ -147,13 +147,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		while(!ifRecv)
-		{
-		}
+//		while(!ifRecv)
+//		{
+//		}
 		ADS1256_UpdateDiffData();
 		
-		robot_vx = ((float)(2048 - Leftx))*3;
-	  robot_vy = ((float)(2048 - Lefty))*3;
+//		robot_vx = ((float)(2048 - Leftx))*3;
+//	  robot_vy = ((float)(2048 - Lefty))*3;
 	  //robot_rot = -((float)(Rightx - 2048))*5;
 		if(Bias_mpu>50 || Bias_mpu<50)robot_rot = 3*Bias_mpu;
 		

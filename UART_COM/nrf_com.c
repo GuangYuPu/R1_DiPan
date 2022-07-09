@@ -17,7 +17,7 @@ void nrf_Transmit_init()
 //发送单片机发送函数，循环调用
 void send()
 {
-    HAL_UART_Transmit(&huart1,nrfDataBag.raw,BAG_LENGTH,50);
+    HAL_UART_Transmit(&huart3,nrfDataBag.raw,BAG_LENGTH,50);
 } 
 
 //接收单片机初始化

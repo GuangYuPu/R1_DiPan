@@ -17,6 +17,7 @@ void mpu6050_init()
 
 void mpu6050_decode(MPU6050_t* data)
 {
+	
    for(int i=0;i<66;++i){
        if(receiveData[i] == 0x55    &&
           receiveData[i+1] == 0x51  &&
