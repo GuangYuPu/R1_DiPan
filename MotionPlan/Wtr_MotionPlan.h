@@ -19,8 +19,8 @@ typedef struct{
     float A;
 }State_t;
 
-void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t);
 void MotionPlan_Init(float ltx,float lty);
+void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t);
 
 extern LT_t lt_t_now;
 extern LT_t lt_t_start;

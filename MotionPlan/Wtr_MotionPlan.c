@@ -1,5 +1,6 @@
 #include "Wtr_MotionPlan.h"
 #include <math.h>
+#include "ADS1256.h"
 
 LT_t lt_t_now; //当前的激光读数
 LT_t lt_t_start; //起点的激光读数
@@ -132,10 +133,24 @@ void MotionPlan_Caculate(float *v,float ref_v,float ref_p,float now_v,float now_
     *v =Kp*(ref_p - now_p) + Kv*(ref_v - now_v);
 }
 
+void MotionPlan_Servo(float ref_x,float ref_y)
+{
+
+}
+
 void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t)
 {
     ltxlast = statex_t_now.P;
     ltylast = statey_t_now.P;
+
+    lt_t_now.LT_x = (float)ADS1256_diff_data[0];
+    lt_t_now.LT_y = (float)ADS1256_diff_data[1];
+
+    if(t == 0)
+    {
+        lt_t_start.LT_x = lt_t_now.LT_x;
+        lt_t_start.LT_y = lt_t_now.LT_y;
+    }
 
     trans_LT2XY(&xy_t_start,lt_t_start.LT_x,lt_t_start.LT_y,ltylast);
     trans_LT2XY(&xy_t_now,lt_t_now.LT_x,lt_t_now.LT_y,ltylast);

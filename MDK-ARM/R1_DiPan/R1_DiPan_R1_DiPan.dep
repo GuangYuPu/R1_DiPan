@@ -1,7 +1,7 @@
 Dependencies for Project 'R1_DiPan', Target 'R1_DiPan': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::ARMCC
 F (startup_stm32f407xx.s)(0x62C5BF08)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 534" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f407xx.lst --xref -o r1_dipan\startup_stm32f407xx.o --depend r1_dipan\startup_stm32f407xx.d)
-F (../Core/Src/main.c)(0x62C9C414)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../UC -I ../UART_COM -I ../omni -I ../ADS -I ../TITH_time -I ..\MPU6050 -I ..\MotionPlan-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o r1_dipan\main.o --omf_browse r1_dipan\main.crf --depend r1_dipan\main.d)
+F (../Core/Src/main.c)(0x62C9C4F4)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../UC -I ../UART_COM -I ../omni -I ../ADS -I ../TITH_time -I ..\MPU6050 -I ..\MotionPlan-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o r1_dipan\main.o --omf_browse r1_dipan\main.crf --depend r1_dipan\main.d)
 I (../Core/Inc/main.h)(0x62C2B070)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6149E2B0)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x62C5BF05)
@@ -49,7 +49,7 @@ I (../UC/wtr_can.h)(0x6149EE65)
 I (../ADS/ADS1256.h)(0x6284A601)
 I (D:\MDK\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\MPU6050\mpu6050.h)(0x62C5C39C)
-I (..\MotionPlan\Wtr_MotionPlan.h)(0x62C83D6F)
+I (..\MotionPlan\Wtr_MotionPlan.h)(0x62C9C60C)
 F (../Core/Src/gpio.c)(0x62C2B06E)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../UC -I ../UART_COM -I ../omni -I ../ADS -I ../TITH_time -I ..\MPU6050 -I ..\MotionPlan-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o r1_dipan\gpio.o --omf_browse r1_dipan\gpio.crf --depend r1_dipan\gpio.d)
 I (../Core/Inc/gpio.h)(0x62C2B06E)
 I (../Core/Inc/main.h)(0x62C2B070)
@@ -630,8 +630,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6149E2B0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6149E2B0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6149E2B0)
 I (../Core/Inc/usart.h)(0x62C5BF04)
-F (..\MotionPlan\Wtr_MotionPlan.c)(0x62C83D8D)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../UC -I ../UART_COM -I ../omni -I ../ADS -I ../TITH_time -I ..\MPU6050 -I ..\MotionPlan-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o r1_dipan\wtr_motionplan.o --omf_browse r1_dipan\wtr_motionplan.crf --depend r1_dipan\wtr_motionplan.d)
-I (..\MotionPlan\Wtr_MotionPlan.h)(0x62C83D6F)
+F (..\MotionPlan\Wtr_MotionPlan.c)(0x62C9C91F)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../UC -I ../UART_COM -I ../omni -I ../ADS -I ../TITH_time -I ..\MPU6050 -I ..\MotionPlan-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o r1_dipan\wtr_motionplan.o --omf_browse r1_dipan\wtr_motionplan.crf --depend r1_dipan\wtr_motionplan.d)
+I (..\MotionPlan\Wtr_MotionPlan.h)(0x62C9C60C)
 I (../Core/Inc/main.h)(0x62C2B070)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6149E2B0)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x62C5BF05)
@@ -666,6 +666,10 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6149E2B0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6149E2B0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6149E2B0)
 I (D:\MDK\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
+I (../ADS/ADS1256.h)(0x6284A601)
+I (D:\MDK\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
+I (../Core/Inc/gpio.h)(0x62C2B06E)
+I (../Core/Inc/spi.h)(0x62C2B06F)
 F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c)(0x6149E2B0)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../UC -I ../UART_COM -I ../omni -I ../ADS -I ../TITH_time -I ..\MPU6050 -I ..\MotionPlan-I.\RTE\_R1_DiPan-ID:\MDK\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o r1_dipan\stm32f4xx_hal_can.o --omf_browse r1_dipan\stm32f4xx_hal_can.crf --depend r1_dipan\stm32f4xx_hal_can.d)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6149E2B0)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x62C5BF05)

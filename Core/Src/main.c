@@ -143,6 +143,7 @@ int main(void)
 	ifRecv = 0;
 	
 	ADS1256_Init();
+  // MotionPlan_Init()
 	
 	HAL_TIM_Base_Start_IT(&htim4);
 	HAL_TIM_Base_Start_IT(&htim5);
@@ -260,6 +261,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if (htim == (&htim4))
 	{
 		time++;
+	}
+  if (htim == (&htim5))
+	{
+		//FSM TRANS BEGIN
+
+    //FSM TRANS END
+
+    //FSM DO BEGIN
+    
+    //FSM DO END
 	}
 }
 
