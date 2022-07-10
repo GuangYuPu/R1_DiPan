@@ -20,7 +20,7 @@ typedef struct{
 }State_t;
 
 void MotionPlan_Init(float ltx,float lty);
-void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t);
+void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t,float ref_x,float ref_y);
 
 extern LT_t lt_t_now;
 extern LT_t lt_t_start;

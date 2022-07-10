@@ -62,9 +62,13 @@
 
 /* USER CODE BEGIN PV */
 int ifRecv;
+
 uint32_t time = 0;
+uint32_t enter_time = 0;
+
 int b = 0;
 int a = 0;
+int state = 0;
 
 uint8_t zone = 0;
 uint8_t qu_qiu = 0;
@@ -163,13 +167,15 @@ int main(void)
 		}
 		ADS1256_UpdateDiffData();
 		
-    
-//		robot_vx = ((float)(2048 - Leftx))*3;
-//	  robot_vy = ((float)(2048 - Lefty))*3;
-	  //robot_rot = -((float)(Rightx - 2048))*5;
+    if(state == 0){
+		robot_vx = ((float)(2048 - Leftx))/1000;
+	  robot_vy = ((float)(2048 - Lefty))/1000;
+	  robot_rot = -((float)(Rightx - 2048))/1000;
+    }
+    else{
+      if(Bias_mpu>5 || Bias_mpu<5)robot_rot = 3*Bias_mpu;
+    }
 
-		if(Bias_mpu>50 || Bias_mpu<50)robot_rot = 3*Bias_mpu;
-		
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
 		speedServo(wheel[0].speed,&hDJI[0]);

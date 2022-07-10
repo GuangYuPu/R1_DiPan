@@ -23,7 +23,7 @@ float Kv = 0.1;
 
 void trans_LT2XY(XY_t *xy_t,float LTx,float LTy,float ltylast)
 {
-    xy_t->XY_x = LTx + 0.4;
+    xy_t->XY_x = LTx + 0.4f;
     xy_t->XY_y = LTy + 0.4;
     if(
        (xy_t->XY_x>0.25&&xy_t->XY_x<0.75)
@@ -135,11 +135,14 @@ void MotionPlan_Caculate(float *v,float ref_v,float ref_p,float now_v,float now_
 
 void MotionPlan_Servo(float ref_x,float ref_y)
 {
-
+    xy_t_ref.XY_x = ref_x;
+    xy_t_ref.XY_y = ref_y;
 }
 
-void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t)
+void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t,float ref_x,float ref_y)
 {
+    MotionPlan_Servo(ref_x,ref_y);
+    
     ltxlast = statex_t_now.P;
     ltylast = statey_t_now.P;
 
