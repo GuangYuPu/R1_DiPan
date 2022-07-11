@@ -30,74 +30,7 @@ Warning: *** SUPPORT EXPIRED, NEW PRODUCT SERIAL NUMBER REQUIRED ***
          *** Running with Code Size Limit: 32K                   ***
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\MDK\ARM\ARMCC\Bin'
 Build target 'R1_DiPan'
-compiling Wtr_MotionPlan.c...
-..\MotionPlan\Wtr_MotionPlan.h(39): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\MotionPlan\Wtr_MotionPlan.c(26): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-      xy_t->XY_x = LTx + 0.4;
-..\MotionPlan\Wtr_MotionPlan.c(27): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-      xy_t->XY_y = LTy + 0.4;
-..\MotionPlan\Wtr_MotionPlan.c(29): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-         (xy_t->XY_x>0.25&&xy_t->XY_x<0.75)
-..\MotionPlan\Wtr_MotionPlan.c(29): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-         (xy_t->XY_x>0.25&&xy_t->XY_x<0.75)
-..\MotionPlan\Wtr_MotionPlan.c(30): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-       ||(xy_t->XY_x>2.25&&xy_t->XY_x<2.75)
-..\MotionPlan\Wtr_MotionPlan.c(30): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-       ||(xy_t->XY_x>2.25&&xy_t->XY_x<2.75)
-..\MotionPlan\Wtr_MotionPlan.c(31): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-       ||(xy_t->XY_x>4.25&&xy_t->XY_x<4.75)
-..\MotionPlan\Wtr_MotionPlan.c(31): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-       ||(xy_t->XY_x>4.25&&xy_t->XY_x<4.75)
-..\MotionPlan\Wtr_MotionPlan.c(32): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-       ||(xy_t->XY_x>6.25&&xy_t->XY_x<6.75)
-..\MotionPlan\Wtr_MotionPlan.c(32): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-       ||(xy_t->XY_x>6.25&&xy_t->XY_x<6.75)
-..\MotionPlan\Wtr_MotionPlan.c(35): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          if((ltylast-LTy)>0.1) xy_t->XY_y += 0.15;
-..\MotionPlan\Wtr_MotionPlan.c(35): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          if((ltylast-LTy)>0.1) xy_t->XY_y += 0.15;
-..\MotionPlan\Wtr_MotionPlan.c(36): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          if((ltylast-LTy)<-0.1) xy_t->XY_y -= 0.15;
-..\MotionPlan\Wtr_MotionPlan.c(42): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-      ltxlast = ltx + 0.4;
-..\MotionPlan\Wtr_MotionPlan.c(43): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-      ltylast = lty + 0.4;
-..\MotionPlan\Wtr_MotionPlan.c(57): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-      t0 = pow((pos_dis*0.5/a0),1.0/3);
-..\MotionPlan\Wtr_MotionPlan.c(63): warning:  #186-D: pointless comparison of unsigned integer with zero
-      if((t>=0)&&(t<t0))
-..\MotionPlan\Wtr_MotionPlan.c(84): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
-..\MotionPlan\Wtr_MotionPlan.c(85): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(85): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(90): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(91): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = (1.0/6)*a0*t*t*t - a0*(0.5*tx*t*t + 2*t0*t*t) + a0*t*(8*t0*t0+4*t0*tx+0.5*tx*tx) - a0*((26.0/3)*t0*t0*t0+5*t0*t0*tx-(1.0/6)*pow(tx,3)+2*tx*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(91): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = (1.0/6)*a0*t*t*t - a0*(0.5*tx*t*t + 2*t0*t*t) + a0*t*(8*t0*t0+4*t0*tx+0.5*tx*tx) - a0*((26.0/3)*t0*t0*t0+5*t0*t0*tx-(1.0/6)*pow(tx,3)+2*tx*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(119): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
-..\MotionPlan\Wtr_MotionPlan.c(120): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(120): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(125): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(126): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = (1.0/6)*a0*t*t*t - a0*(0.5*tx*t*t + 2*t0*t*t) + a0*t*(8*t0*t0+4*t0*tx+0.5*tx*tx) - a0*((26.0/3)*t0*t0*t0+5*t0*t0*tx-(1.0/6)*pow(tx,3)+2*tx*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(126): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          state_t->P = (1.0/6)*a0*t*t*t - a0*(0.5*tx*t*t + 2*t0*t*t) + a0*t*(8*t0*t0+4*t0*tx+0.5*tx*tx) - a0*((26.0/3)*t0*t0*t0+5*t0*t0*tx-(1.0/6)*pow(tx,3)+2*tx*tx*tx);
-..\MotionPlan\Wtr_MotionPlan.c(194): warning:  #1-D: last line of file ends without a newline
-  }
-..\MotionPlan\Wtr_MotionPlan.c: 31 warnings, 0 errors
-linking...
-Program Size: Code=19952 RO-data=600 RW-data=92 ZI-data=3124  
-FromELF: creating hex file...
-"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 32 Warning(s).
+"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -121,7 +54,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

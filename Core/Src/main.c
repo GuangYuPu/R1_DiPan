@@ -271,11 +271,29 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim == (&htim5))
 	{
 		//FSM TRANS BEGIN
-
+		if(button_D == 1 && state == 0)
+		{
+			enter_time = time;
+      state = 1;
+		}
     //FSM TRANS END
 
     //FSM DO BEGIN
-    
+    if(state == 1)
+    {
+      if((time - enter_time)<1000)
+      {
+        robot_vy = ((float)(time-enter_time))/1000;
+      }
+      else if((time - enter_time)<2000)
+      {
+        robot_vy = -((float)(time-enter_time))/1000 + 2;
+      }
+      else
+      {
+        state = 0;
+      }
+    }
     //FSM DO END
 	}
 }
