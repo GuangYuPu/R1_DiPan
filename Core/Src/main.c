@@ -42,11 +42,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#ifdef __GNUC__
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -210,7 +206,7 @@ int main(void)
 		
 		Bias_mpu += mpu6050_databag.Wz;
 
-    // printf("%d\r\n",time);
+printf("pgy:%d\n",(int)(robot_vy*1000));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -318,12 +314,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         ifRecv_mpu = 1;
 				mpu6050_decode(&mpu6050_databag);
 		}
-}
-
-PUTCHAR_PROTOTYPE
-{
-  HAL_UART_Transmit(&huart6,(uint8_t *)&ch,1,0xFFFF);//阻塞方式打印
-  return ch;
 }
 /* USER CODE END 4 */
 

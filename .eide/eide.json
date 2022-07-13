@@ -241,6 +241,9 @@
           },
           {
             "path": "MotionPlan/Wtr_MotionPlan.c"
+          },
+          {
+            "path": "UC/uart_printf.c"
           }
         ],
         "folders": []

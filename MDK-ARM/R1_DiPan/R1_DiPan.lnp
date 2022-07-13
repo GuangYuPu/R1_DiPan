@@ -19,6 +19,7 @@
 "r1_dipan\tith_time.o"
 "r1_dipan\mpu6050.o"
 "r1_dipan\wtr_motionplan.o"
+"r1_dipan\uart_printf.o"
 "r1_dipan\stm32f4xx_hal_can.o"
 "r1_dipan\stm32f4xx_hal_rcc.o"
 "r1_dipan\stm32f4xx_hal_rcc_ex.o"

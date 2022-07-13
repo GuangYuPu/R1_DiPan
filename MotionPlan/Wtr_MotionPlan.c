@@ -119,7 +119,7 @@ void MotionPlan_state_update_t0(State_t *state_t,uint32_t t_ms,float t0)
     {
         state_t->A = -a0*(t-2*t0-tx);
         state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
-        state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
+        state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
     }
     else if((t>3*t0+tx)&&(t<(4*t0+tx)))
     {
