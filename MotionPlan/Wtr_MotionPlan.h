@@ -1,3 +1,14 @@
+/*using method*/
+
+//#include "Wtr_MotionPlan.h"
+
+//MotionPlan_Init(float ltx,float lty);
+
+/*
+timerX interrupt:
+do:WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y)
+while:ref-now<...
+*/
 #ifndef WTR_MOTIONPLAN__
 #define WTR_MOTIONPLAN__
 
@@ -20,7 +31,7 @@ typedef struct{
 }State_t;
 
 void MotionPlan_Init(float ltx,float lty);
-void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t,float ref_x,float ref_y);
+void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y);
 
 extern LT_t lt_t_now;
 extern LT_t lt_t_start;
