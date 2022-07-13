@@ -281,17 +281,26 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     //FSM DO BEGIN
     if(state == 1)
     {
-      if((time - enter_time)<350)
+      float t = (float)(time - enter_time)/1000.f;
+      if(t<t0)
       {
-        robot_vy = 7.5*((float)(time-enter_time))*((float)(time-enter_time))/1000000;
+        robot_vy = (1.0/2)*a0*t*t;
       }
-      else if((time - enter_time)<1050)
+      else if(t<2*t0)
       {
-        robot_vy = -7.5*((float)(time-enter_time))*((float)(time-enter_time))/1000000 + 10.5*((float)(time-enter_time))/1000 - 1.875;
+        robot_vy = -(a0*(t*t - 4*t*t0 + 2*t0*t0))/2;
       }
-      else if((time - enter_time)<1400)
+      else if(t<(2*t0+0.5))
       {
-        robot_vy = 7.5*((float)(time-enter_time))*((float)(time-enter_time))/1000000 - 21*((float)(time-enter_time))/1000 + 14.7;
+        robot_vy = a0*t0*t0;
+      }
+      else if(t<(3*t0+0.5))
+      {
+        robot_vy = -(1.0/2)*a0*t*t + (2*a0*t0+a0*0.5)*t - (a0*t0*t0 + 0.5*a0*0.5*0.5 + 2*a0*t0*0.5);
+      }
+      else if(t<(4*t0+0.5))
+      {
+        robot_vy = (1.0/2)*a0*t*t - a0*(4*t0 + 0.5)*t + a0*(8*t0*t0+4*t0*0.5+0.5*0.5*0.5);
       }
       else
       {

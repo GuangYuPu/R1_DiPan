@@ -16,8 +16,8 @@ State_t statey_t_now; //当前时刻y方向的实际状态
 
 float ltylast,ltxlast;
 
-float a0 = 12.5;
-float t0 = 0.2;
+float a0 = 6.8;
+float t0 = 0.5;
 float Kp = 1;
 float Kv = 0.1;
 
@@ -61,36 +61,38 @@ float Caculate_t0(float pos_dis)
 void MotionPlan_state_update(State_t *state_t,uint32_t t_ms,float tx)
 {
     float t = ((float)(t_ms))/1000.f;
-    if((t>=0)&&(t<t0))
+    if((t>0)&&(t<t0))
     {
         state_t->A = a0*t;
         state_t->V = (1.0/2)*a0*t*t;
         state_t->P = (1.0/6)*a0*t*t*t;
     }
-    else if((t>=t0)&&(t<2*t0))
+    else if((t>t0)&&(t<2*t0))
     {
         state_t->A = -a0*(t-2*t0);
+        state_t->V = -(a0*(t*t - 4*t*t0 + 2*t0*t0))/2;
+        state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
+    }
+    else if((t>2*t0)&&(t<(2*t0+tx)))
+    {
+        state_t->A = 0;
         state_t->V = a0*t0*t0;
         state_t->P = a0*t0*t0*t - a0*t0*t0*t0;
     }
-    else if((t>=2*t0)&&(t<(2*t0+tx)))
-    {
-        state_t->A = 0;
-        state_t->V = (1.0/2)*a0*t*t;
-        state_t->P = (1.0/6)*a0*t*t*t;
-    }
-    else if((t>=2*t0+tx)&&(t<(3*t0+tx)))
+    else if((t>2*t0+tx)&&(t<(3*t0+tx)))
     {
         state_t->A = -a0*(t-2*t0-tx);
         state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
-        state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
+        state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
     }
-    else if((t>=3*t0+tx)&&(t<(4*t0+tx)))
+    else if((t>3*t0+tx)&&(t<(4*t0+tx)))
     {
         state_t->A = a0*(t-4*t0-tx);
         state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
-        state_t->P = (1.0/6)*a0*t*t*t - a0*(0.5*tx*t*t + 2*t0*t*t) + a0*t*(8*t0*t0+4*t0*tx+0.5*tx*tx) - a0*((26.0/3)*t0*t0*t0+5*t0*t0*tx-(1.0/6)*pow(tx,3)+2*tx*tx*tx);
-    }
+        //state_t->P = (1.0/6)*a0*t*t*t - a0*(0.5*tx*t*t + 2*t0*t*t) + a0*t*(8*t0*t0+4*t0*tx+0.5*tx*tx) - a0*((26.0/3)*t0*t0*t0+5*t0*t0*tx-(1.0/6)*pow(tx,3)+2*tx*tx*tx);    }
+		state_t->P = -(a0*(- t*t*t + 12*t*t*t0 + 3*t*t*tx - 48*t*t0*t0 - 24*t*t0*tx - 3*t*tx*tx + 52*t0*t0*t0 + 42*t0*t0*tx + 12*t0*tx*tx + tx*tx*tx))/6;
+
+		}
 }
 
 void MotionPlan_state_update_t0(State_t *state_t,uint32_t t_ms,float t0)

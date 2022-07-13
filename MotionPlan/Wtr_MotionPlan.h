@@ -33,6 +33,10 @@ typedef struct{
 void MotionPlan_Init(float ltx,float lty);
 void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y);
 
+
+void MotionPlan_state_update_t0(State_t *state_t,uint32_t t_ms,float t0);
+void MotionPlan_state_update(State_t *state_t,uint32_t t_ms,float tx);
+
 extern LT_t lt_t_now;
 extern LT_t lt_t_start;
 
@@ -46,5 +50,7 @@ extern State_t statey_t_ref;
 extern State_t statey_t_now;
 
 extern float ltylast,ltxlast;
+
+extern float Kp,Kv,a0,t0;
 
 #endif

@@ -53,19 +53,29 @@ compiling main.c...
   void mpu6050_init();
 ../MPU6050/mpu6050.h(34): warning:  #1-D: last line of file ends without a newline
   #endif
-../MotionPlan/Wtr_MotionPlan.h(50): warning:  #1-D: last line of file ends without a newline
+../MotionPlan/Wtr_MotionPlan.h(56): warning:  #1-D: last line of file ends without a newline
   #endif
-../Core/Src/main.c(286): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          robot_vy = 7.5*((float)(time-enter_time))*((float)(time-enter_time))/1000000;
-../Core/Src/main.c(290): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          robot_vy = -7.5*((float)(time-enter_time))*((float)(time-enter_time))/1000000 + 10.5*((float)(time-enter_time))/1000 - 1.875;
-../Core/Src/main.c(294): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-          robot_vy = 7.5*((float)(time-enter_time))*((float)(time-enter_time))/1000000 - 21*((float)(time-enter_time))/1000 + 14.7;
-../Core/Src/main.c: 15 warnings, 0 errors
+../Core/Src/main.c(293): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+        else if(t<(2*t0+0.5))
+../Core/Src/main.c(297): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+        else if(t<(3*t0+0.5))
+../Core/Src/main.c(299): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          robot_vy = -(1.0/2)*a0*t*t + (2*a0*t0+a0*0.5)*t - (a0*t0*t0 + 0.5*a0*0.5*0.5 + 2*a0*t0*0.5);
+../Core/Src/main.c(299): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          robot_vy = -(1.0/2)*a0*t*t + (2*a0*t0+a0*0.5)*t - (a0*t0*t0 + 0.5*a0*0.5*0.5 + 2*a0*t0*0.5);
+../Core/Src/main.c(299): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          robot_vy = -(1.0/2)*a0*t*t + (2*a0*t0+a0*0.5)*t - (a0*t0*t0 + 0.5*a0*0.5*0.5 + 2*a0*t0*0.5);
+../Core/Src/main.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+        else if(t<(4*t0+0.5))
+../Core/Src/main.c(303): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          robot_vy = (1.0/2)*a0*t*t - a0*(4*t0 + 0.5)*t + a0*(8*t0*t0+4*t0*0.5+0.5*0.5*0.5);
+../Core/Src/main.c(303): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          robot_vy = (1.0/2)*a0*t*t - a0*(4*t0 + 0.5)*t + a0*(8*t0*t0+4*t0*0.5+0.5*0.5*0.5);
+../Core/Src/main.c: 20 warnings, 0 errors
 linking...
-Program Size: Code=21800 RO-data=600 RW-data=104 ZI-data=3152  
+Program Size: Code=22272 RO-data=600 RW-data=168 ZI-data=3152  
 FromELF: creating hex file...
-"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 16 Warning(s).
+"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 21 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -89,7 +99,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
