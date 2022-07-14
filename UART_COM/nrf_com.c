@@ -5,7 +5,7 @@
 nrfBag_trans_t nrfDataBag;
 uint8_t nrfReceive[BAG_LENGTH*2];
 int Leftx, Lefty, Rightx, Righty; 
-uint8_t button_A,button_B,button_C,button_D,button_E,button_F,button_G,button_H;
+uint8_t button_A,button_B,button_C,button_D,button_E,button_F,button_G,button_H,button_G_last,button_H_last;
 
 //发送单片机初始化
 void nrf_Transmit_init()
@@ -40,6 +40,8 @@ void nrf_decode()
               tempBag.header[2] == HEADER_MIDDLE_2 &&
               tempBag.header[3] == HEADER_LOW  
           ){
+              button_G_last = button_G; 
+              button_H_last = button_H;
               Leftx = tempBag.Leftx;
               Lefty = tempBag.Lefty;
               Rightx = tempBag.Rightx;

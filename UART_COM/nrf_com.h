@@ -75,7 +75,7 @@ typedef union{
 extern nrfBag_trans_t nrfDataBag;
 extern uint8_t nrfReceive[BAG_LENGTH*2];
 extern int Leftx, Lefty, Rightx, Righty; 
-extern uint8_t button_A,button_B,button_C,button_D,button_E,button_F,button_G,button_H;
+extern uint8_t button_A,button_B,button_C,button_D,button_E,button_F,button_G,button_H,button_G_last,button_H_last;
 
 void nrf_Transmit_init();
 void send();

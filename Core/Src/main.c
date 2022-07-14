@@ -36,7 +36,7 @@
 #include "ADS1256.h"
 #include "mpu6050.h"
 #include "Wtr_MotionPlan.h"
-
+#include "main.h"
 #include "stdio.h"  
 /* USER CODE END Includes */
 
@@ -57,6 +57,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+float ref_x = 0;
+float ref_y = 0;
+
 int ifRecv = 0;
 int ifRecv_mpu = 0;
 
@@ -65,7 +68,10 @@ uint32_t enter_time = 0;
 
 int b = 0;
 int a = 0;
+
 int state = 0;
+int index_r = 0;
+int index_b = 0;
 
 uint8_t zone = 0;
 uint8_t qu_qiu = 0;
@@ -144,7 +150,7 @@ int main(void)
 	ifRecv = 0;
 	
 	ADS1256_Init();
-  // MotionPlan_Init()
+  MotionPlan_Init(((float)(ADS1256_diff_data[3]))/547098.f,((float)(ADS1256_diff_data[0]))/547098.f);
 	
 	HAL_TIM_Base_Start_IT(&htim4);
 	HAL_TIM_Base_Start_IT(&htim5);
@@ -171,8 +177,11 @@ int main(void)
 	  robot_rot = -((float)(Rightx - 2048))/1000;
     }
     else{
-      if(Bias_mpu>5 || Bias_mpu<5)robot_rot = 3*Bias_mpu;
+      if(Bias_mpu>2 || Bias_mpu<-2)robot_rot = 3*Bias_mpu;
     }
+
+    if((button_G_last > 0)&&(button_G == 0)) index_r++;
+    if((button_H_last > 0)&&(button_H == 0)) index_b++;
 
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
@@ -204,9 +213,9 @@ int main(void)
 		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
-		Bias_mpu += mpu6050_databag.Wz;
+		Bias_mpu = HWT_BIAS;
 
-printf("pgy:%d\n",(int)(robot_vy*1000));
+printf("pgy:%d\n",(int)(Bias_mpu));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -271,39 +280,92 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim == (&htim5))
 	{
 		//FSM TRANS BEGIN
-		if(button_D == 1 && state == 0)
+		if(button_E == 1 && button_D == 1 && state == 0)
 		{
 			enter_time = time;
       state = 1;
+      switch (index_r)
+      {
+        case 0:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 1:
+        // ref_x = ;
+        // ref_y = ;
+        break; 
+        case 2:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 3:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 4:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 5:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+      
+      default:
+        ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
+        ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        break;
+      }
+      if(button_E == 1 && button_C == 1 && state == 0)
+		{
+			enter_time = time;
+      state = 2;
+      switch (index_b)
+      {
+        case 0:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 1:
+        // ref_x = ;
+        // ref_y = ;
+        break; 
+        case 2:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 3:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 4:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+        case 5:
+        // ref_x = ;
+        // ref_y = ;
+        break;
+      
+      default:
+        ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
+        ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        break;
+      }
+		}
 		}
     //FSM TRANS END
 
     //FSM DO BEGIN
-    if(state == 1)
+    if((state == 1) || (state == 2))
     {
-      float t = (float)(time - enter_time)/1000.f;
-      if(t<t0)
+      if((abs(((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 00.1) || (abs(((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 00.1))
       {
-        robot_vy = (1.0/2)*a0*t*t;
-      }
-      else if(t<2*t0)
-      {
-        robot_vy = -(a0*(t*t - 4*t*t0 + 2*t0*t0))/2;
-      }
-      else if(t<(2*t0+0.5))
-      {
-        robot_vy = a0*t0*t0;
-      }
-      else if(t<(3*t0+0.5))
-      {
-        robot_vy = -(1.0/2)*a0*t*t + (2*a0*t0+a0*0.5)*t - (a0*t0*t0 + 0.5*a0*0.5*0.5 + 2*a0*t0*0.5);
-      }
-      else if(t<(4*t0+0.5))
-      {
-        robot_vy = (1.0/2)*a0*t*t - a0*(4*t0 + 0.5)*t + a0*(8*t0*t0+4*t0*0.5+0.5*0.5*0.5);
+        WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y);
       }
       else
       {
+        robot_vx = robot_vy = 0;
         state = 0;
       }
     }
@@ -321,7 +383,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if(huart->Instance == huart3.Instance)
 		{
         ifRecv_mpu = 1;
-				mpu6050_decode(&mpu6050_databag);
+				mpu6050_decode();
 		}
 }
 /* USER CODE END 4 */

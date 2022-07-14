@@ -19,17 +19,14 @@ float ltylast,ltxlast;
 float a0 = 6.8;
 float t0 = 0.5;
 float Kp = 1;
-float Kv = 0.1;
+float Kv = 0.0;
 
 void trans_LT2XY(XY_t *xy_t,float LTx,float LTy,float ltylast)
 {
-    xy_t->XY_x = LTx + 0.4f;
-    xy_t->XY_y = LTy + 0.4;
+    xy_t->XY_x = LTx;
+    xy_t->XY_y = LTy;
     if(
-       (xy_t->XY_x>0.25&&xy_t->XY_x<0.75)
-     ||(xy_t->XY_x>2.25&&xy_t->XY_x<2.75)
-     ||(xy_t->XY_x>4.25&&xy_t->XY_x<4.75)
-     ||(xy_t->XY_x>6.25&&xy_t->XY_x<6.75)
+       1
      )
      { 
         if((ltylast-LTy)>0.1) xy_t->XY_y += 0.15;
@@ -39,8 +36,8 @@ void trans_LT2XY(XY_t *xy_t,float LTx,float LTy,float ltylast)
 
 void MotionPlan_Init(float ltx,float lty)
 {
-    ltxlast = ltx + 0.4;
-    ltylast = lty + 0.4;
+    ltxlast = ltx;
+    ltylast = lty;
 }
 
 
@@ -152,8 +149,8 @@ void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float r
     ltxlast = statex_t_now.P;
     ltylast = statey_t_now.P;
 
-    lt_t_now.LT_x = (float)ADS1256_diff_data[0];
-    lt_t_now.LT_y = (float)ADS1256_diff_data[1];
+    lt_t_now.LT_x = ((float)(ADS1256_diff_data[3]))/547098.f;
+    lt_t_now.LT_y = ((float)(ADS1256_diff_data[0]))/547098.f;
 
     if(t_ms == 0)
     {
