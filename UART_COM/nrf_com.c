@@ -25,7 +25,7 @@ void send()
 //接收单片机初始化
 void nrf_receive_init()
 {
-    HAL_UART_Receive_DMA(&huart6,nrfReceive,BAG_LENGTH*2);
+    HAL_UART_Receive_DMA(&huart1,nrfReceive,BAG_LENGTH*2);
 }
 
 //在回调函数中进行解码
