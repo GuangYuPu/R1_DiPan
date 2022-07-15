@@ -478,7 +478,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     //FSM DO BEGIN
     if((state == 1) || (state == 2))
     {
-      if((fabs(((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 00.1) || (fabs(((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 00.1))
+      if((fabs(((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 0.01) || (fabs(((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 0.01))
       {
         WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y);
       }
