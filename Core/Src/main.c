@@ -62,6 +62,7 @@ float ref_y = 0;
 
 int ifRecv = 0;
 int ifRecv_mpu = 0;
+uint32_t HWT_init = 0;
 
 uint32_t time = 0;
 uint32_t enter_time = 0;
@@ -82,6 +83,8 @@ uint8_t she_qiu = 0;
 float robot_vx = 0;
 float robot_vy = 0;
 float robot_rot = 0;
+float k_bias = 0.1;
+
 
 int32_t Bias_mpu = 0;
 /* USER CODE END PV */
@@ -161,6 +164,7 @@ int main(void)
 	nrf_receive_init();
 
 	mpu6050_init();
+	HWT_init = HWT_BIAS;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -176,11 +180,12 @@ int main(void)
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
 	  robot_vy = ((float)(2048 - Lefty))/1000;
-    if(Bias_mpu>1 || Bias_mpu<-1)robot_rot = -(0.1)*Bias_mpu;
+    if(Bias_mpu>3 || Bias_mpu<-3)robot_rot = k_bias*Bias_mpu;
 	  // robot_rot = -((float)(Rightx - 2048))/1000;
-    }
-    else{
-      if(Bias_mpu>2 || Bias_mpu<-2)robot_rot = 3*Bias_mpu;
+		else 
+    {robot_rot = 0;}
+    
+      if(Bias_mpu>3 || Bias_mpu<-3)robot_rot = (k_bias)*Bias_mpu;
     }
 
     if((button_G_last > 0)&&(button_G == 0)) index_r++;
@@ -188,6 +193,9 @@ int main(void)
     if((button_H_last > 0)&&(button_H == 0)) index_b++;
     if(index_b>5) index_b - 5;
   
+		if(robot_rot>3) robot_rot = 1;
+		if(robot_vx>2) robot_vx = 1;
+		if(robot_vy>2) robot_vy = 1;
 
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
@@ -317,9 +325,10 @@ int main(void)
 		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
-		Bias_mpu = HWT_BIAS/100 - 175;
+		if(time<3000) HWT_init = HWT_BIAS;
+		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d\n",(int)(HWT_BIAS));
+printf("pgy:%d,%d\n",(int)(HWT_BIAS),(int)(HWT_init));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
