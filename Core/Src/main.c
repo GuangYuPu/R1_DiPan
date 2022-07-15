@@ -174,7 +174,8 @@ int main(void)
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
 	  robot_vy = ((float)(2048 - Lefty))/1000;
-	  robot_rot = -((float)(Rightx - 2048))/1000;
+    if(Bias_mpu>1 || Bias_mpu<-1)robot_rot = -(0.1)*Bias_mpu;
+	  // robot_rot = -((float)(Rightx - 2048))/1000;
     }
     else{
       if(Bias_mpu>2 || Bias_mpu<-2)robot_rot = 3*Bias_mpu;
@@ -213,9 +214,9 @@ int main(void)
 		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
-		Bias_mpu = HWT_BIAS;
+		Bias_mpu = HWT_BIAS/100 - 175;
 
-printf("pgy:%d\n",(int)(Bias_mpu));
+printf("pgy:%d\n",(int)(HWT_BIAS));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -316,7 +317,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
         break;
       }
-      if(button_E == 1 && button_C == 1 && state == 0)
+      if(button_F == 1 && button_D == 1 && state == 0)
 		{
 			enter_time = time;
       state = 2;
@@ -359,7 +360,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     //FSM DO BEGIN
     if((state == 1) || (state == 2))
     {
-      if((abs(((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 00.1) || (abs(((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 00.1))
+      if((fabs(((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 00.1) || (fabs(((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 00.1))
       {
         WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y);
       }
