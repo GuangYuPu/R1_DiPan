@@ -31,7 +31,7 @@ typedef struct{
 }State_t;
 
 void MotionPlan_Init(float ltx,float lty);
-void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y);
+void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y,int state);
 
 
 void MotionPlan_state_update_t0(State_t *state_t,uint32_t t_ms,float t0);

@@ -141,8 +141,9 @@ void MotionPlan_Servo(float ref_x,float ref_y)
     xy_t_ref.XY_y = ref_y;
 }
 
-void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y)
+void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float ref_y,int state)
 {
+  if(state != 0){
     float t = ((float)(t_ms))/1000.f;
     MotionPlan_Servo(ref_x,ref_y);
     
@@ -194,4 +195,20 @@ void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float r
 
     MotionPlan_Caculate(vx,statex_t_ref.V,statex_t_ref.P,statex_t_now.V,statex_t_now.P);
     MotionPlan_Caculate(vy,statey_t_ref.V,statey_t_ref.P,statey_t_now.V,statey_t_now.P);
+  }
+  else
+  {
+    ltxlast = statex_t_now.P;
+    ltylast = statey_t_now.P;
+    
+    lt_t_now.LT_x = ((float)(ADS1256_diff_data[3]))/547098.f;
+    lt_t_now.LT_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+
+    trans_LT2XY(&xy_t_now,lt_t_start.LT_x,lt_t_start.LT_y,ltylast);
+
+    statex_t_now.P = xy_t_now.XY_x;
+    statey_t_now.P = xy_t_now.XY_y;
+    statex_t_now.V = (xy_t_now.XY_x - ltxlast)*1000;
+    statey_t_now.V = (xy_t_now.XY_y - ltylast)*1000;
+  }
 }
