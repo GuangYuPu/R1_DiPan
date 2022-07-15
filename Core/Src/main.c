@@ -73,6 +73,8 @@ int state = 0;
 int index_r = 0;
 int index_b = 0;
 
+uint8_t region = 0;
+
 uint8_t zone = 0;
 uint8_t qu_qiu = 0;
 uint8_t she_qiu = 0;
@@ -182,7 +184,10 @@ int main(void)
     }
 
     if((button_G_last > 0)&&(button_G == 0)) index_r++;
+    if(index_r>5) index_r - 5;
     if((button_H_last > 0)&&(button_H == 0)) index_b++;
+    if(index_b>5) index_b - 5;
+  
 
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
@@ -197,6 +202,104 @@ int main(void)
 															 hDJI[2].speedPID.output,
 															 hDJI[3].speedPID.output);
 		
+    if(button_E == 1 && button_B == 1)
+    {
+      switch (region)
+      {
+        case 0:
+        zone = 25;
+        break;
+        case 1:
+        zone = 1;
+        break;
+        case 3:
+        zone = 3;
+        break;
+        case 5:
+        zone = 5;
+        break;
+        case 7:
+        zone = 7;
+        break;
+        case 9:
+        zone = 9;
+        break;
+        case 11:
+        zone = 11;
+        break;
+        case 2:
+        zone = 13;
+        break;
+        case 4:
+        zone = 15;
+        break;
+        case 6:
+        zone = 17;
+        break;
+        case 8:
+        zone = 19;
+        break;
+        case 10:
+        zone = 21;
+        break;
+        case 12:
+        zone = 23;
+        break;
+      default:
+      zone = zone;
+        break;
+      }
+    }
+
+    if(button_F == 1 && button_B == 1)
+    {
+      switch (region)
+      {
+        case 0:
+        zone = 0;
+        break;
+        case 1:
+        zone = 2;
+        break;
+        case 3:
+        zone = 4;
+        break;
+        case 5:
+        zone = 6;
+        break;
+        case 7:
+        zone = 8;
+        break;
+        case 9:
+        zone = 10;
+        break;
+        case 11:
+        zone = 12;
+        break;
+        case 2:
+        zone = 14;
+        break;
+        case 4:
+        zone = 16;
+        break;
+        case 6:
+        zone = 18;
+        break;
+        case 8:
+        zone = 20;
+        break;
+        case 10:
+        zone = 22;
+        break;
+        case 12:
+        zone = 24;
+        break;
+      default:
+      zone = zone;
+        break;
+      }
+    }
+
 		nrfDataBag.Leftx = Leftx;
 		nrfDataBag.Rightx = Rightx;
 		nrfDataBag.Lefty = Lefty;
@@ -290,33 +393,41 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         case 0:
         // ref_x = ;
         // ref_y = ;
+        region = 1;
         break;
         case 1:
         // ref_x = ;
         // ref_y = ;
+        region = 3;
         break; 
         case 2:
         // ref_x = ;
         // ref_y = ;
+        region = 5;
         break;
         case 3:
         // ref_x = ;
         // ref_y = ;
+        region = 7;
         break;
         case 4:
         // ref_x = ;
         // ref_y = ;
+        region = 9;
         break;
         case 5:
         // ref_x = ;
         // ref_y = ;
+        region = 11;
         break;
       
       default:
         ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
         ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        region = region;
         break;
       }
+    } 
       if(button_F == 1 && button_D == 1 && state == 0)
 		{
 			enter_time = time;
@@ -326,35 +437,42 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         case 0:
         // ref_x = ;
         // ref_y = ;
+        region = 2;
         break;
         case 1:
         // ref_x = ;
         // ref_y = ;
+        region = 4;
         break; 
         case 2:
         // ref_x = ;
         // ref_y = ;
+        region = 6;
         break;
         case 3:
         // ref_x = ;
         // ref_y = ;
+        region = 8;
         break;
         case 4:
         // ref_x = ;
         // ref_y = ;
+        region = 10;
         break;
         case 5:
         // ref_x = ;
         // ref_y = ;
+        region = 12;
         break;
       
       default:
         ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
         ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        region = region;
         break;
       }
 		}
-		}
+	
     //FSM TRANS END
 
     //FSM DO BEGIN
