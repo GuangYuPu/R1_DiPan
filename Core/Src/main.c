@@ -59,6 +59,8 @@
 /* USER CODE BEGIN PV */
 float ref_x = 0;
 float ref_y = 0;
+float Ref_x[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+float Ref_y[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 int ifRecv = 0;
 int ifRecv_mpu = 0;
@@ -173,6 +175,7 @@ int main(void)
   {
 		while(!ifRecv)
 		{
+      time = 0;
 		}
 		
     ADS1256_UpdateDiffData();
@@ -400,33 +403,33 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       switch (index_r)
       {
         case 0:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[0];
+        ref_y = Ref_y[0];
         region = 1;
         break;
         case 1:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[3];
+        ref_y = Ref_y[3];
         region = 3;
         break; 
         case 2:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[5];
+        ref_y = Ref_y[5];
         region = 5;
         break;
         case 3:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[7];
+        ref_y = Ref_y[7];
         region = 7;
         break;
         case 4:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[9];
+        ref_y = Ref_y[9];
         region = 9;
         break;
         case 5:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[11];
+        ref_y = Ref_y[11];
         region = 11;
         break;
       
@@ -444,33 +447,33 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       switch (index_b)
       {
         case 0:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[2];
+        ref_y = Ref_y[2];
         region = 2;
         break;
         case 1:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[4];
+        ref_y = Ref_y[4];
         region = 4;
         break; 
         case 2:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[6];
+        ref_y = Ref_y[6];
         region = 6;
         break;
         case 3:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[8];
+        ref_y = Ref_y[8];
         region = 8;
         break;
         case 4:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[10];
+        ref_y = Ref_y[10];
         region = 10;
         break;
         case 5:
-        // ref_x = ;
-        // ref_y = ;
+        ref_x = Ref_x[12];
+        ref_y = Ref_y[12];
         region = 12;
         break;
       
@@ -490,17 +493,45 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       if((((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 0.01f
       || (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 0.01f
       || (((float)(ADS1256_diff_data[3]))/547098.f - ref_x) < -0.01f
-      || (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 0.01f
+      || (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) < -0.01f
       )
       {
         WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y,state);
+        /* Bei Yong Fang An*/
+        // if((((float)(ADS1256_diff_data[3]))/547098.f - ref_x) < 0.01f
+        // && (((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > -0.01f
+        // )
+        // {
+        //   robot_vx = 0;
+        // }
+        // if((((float)(ADS1256_diff_data[0]))/547098.f - ref_y) < 0.01f
+        // && (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > -0.01f
+        // )
+        // {
+        //   robot_vy = 0;
+        // }
       }
       else
       {
         robot_vx = robot_vy = 0;
         state = 0;
+        /* Bei Yong Fang An*/
+        // enter_time = time;
+        // state = 3;
       }
     }
+    /* Bei Yong Fang An*/
+    // else if(state == 3)
+    // {
+    //   if ((enter_time - time)<500)
+    //   {
+    //     /* code */
+    //   }
+    //   else
+    //   {
+    //     state = 0;
+    //   }
+    // }
     else
     {
       WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y,state); 
