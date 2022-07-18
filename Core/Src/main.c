@@ -68,7 +68,7 @@ int Ref_y[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 int ifRecv = 0;
 int ifRecv_mpu = 0;
-uint32_t HWT_init = 0;
+int32_t HWT_init = 0;
 
 uint32_t time = 0;
 uint32_t enter_time = 0;
