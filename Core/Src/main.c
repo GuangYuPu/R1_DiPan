@@ -57,10 +57,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-float ref_x = 0;
-float ref_y = 0;
-float Ref_x[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
-float Ref_y[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+int ref_x = 0;
+int ref_y = 0;
+int cur_x = 0;
+int cur_y = 0;
+int cur_gate[4] = {0,0,0,0};
+int gate_y = 0;
+int Ref_x[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+int Ref_y[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 int ifRecv = 0;
 int ifRecv_mpu = 0;
@@ -157,7 +161,7 @@ int main(void)
 	ifRecv = 0;
 	
 	ADS1256_Init();
-  MotionPlan_Init(((float)(ADS1256_diff_data[3]))/547098.f,((float)(ADS1256_diff_data[0]))/547098.f);
+  // MotionPlan_Init(((float)(ADS1256_diff_data[3]))/547098.f,((float)(ADS1256_diff_data[0]))/547098.f);
 	
 	HAL_TIM_Base_Start_IT(&htim4);
 	HAL_TIM_Base_Start_IT(&htim5);
@@ -180,10 +184,17 @@ int main(void)
 		
     ADS1256_UpdateDiffData();
 		
+    cur_x = ADS1256_diff_data[3];
+    cur_y = ADS1256_diff_data[0];
+    if(((cur_x>cur_gate[0])&&(cur_x<cur_gate[1])) || ((cur_x>cur_gate[2])&&(cur_x<cur_gate[3])))
+    {
+      cur_y += gate_y;
+    }
+
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
 	  robot_vy = ((float)(2048 - Lefty))/1000;
-    if(Bias_mpu>3 || Bias_mpu<-3)robot_rot = k_bias*Bias_mpu;
+    if(Bias_mpu>3 || Bias_mpu<-3) robot_rot = k_bias*Bias_mpu;
 	  // robot_rot = -((float)(Rightx - 2048))/1000;
 		else 
     {robot_rot = 0;}
@@ -434,8 +445,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         break;
       
       default:
-        ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
-        ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        // ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
+        // ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        ref_x = cur_x;
+        ref_y = cur_y;
         region = region;
         break;
       }
@@ -478,8 +491,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         break;
       
       default:
-        ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
-        ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        // ref_x = ((float)(ADS1256_diff_data[3]))/547098.f;
+        // ref_y = ((float)(ADS1256_diff_data[0]))/547098.f;
+        ref_x = cur_x;
+        ref_y = cur_y;
         region = region;
         break;
       }
@@ -498,49 +513,49 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     //FSM DO BEGIN
     if((state == 1) || (state == 2) || (state == 3))
     {
-      if((((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 0.01f
-      || (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 0.01f
-      || (((float)(ADS1256_diff_data[3]))/547098.f - ref_x) < -0.01f
-      || (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) < -0.01f
+      if((cur_x - ref_x) > 1000
+      || (cur_x - ref_x) > 1000
+      || (cur_y - ref_x) < -1000
+      || (cur_y - ref_x) < -1000
       )
       {
-        WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y,state);
+        // WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y,state);
         /* Bei Yong Fang An*/
-        // if((((float)(ADS1256_diff_data[3]))/547098.f - ref_x) < 0.01f
-        // && (((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > -0.01f
-        // )
-        // {
-        //   robot_vx = 0;
-        // }
-        // if((((float)(ADS1256_diff_data[0]))/547098.f - ref_y) < 0.01f
-        // && (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > -0.01f
-        // )
-        // {
-        //   robot_vy = 0;
-        // }
+        if((cur_x - ref_x) < 1000
+        && (cur_x - ref_x) > -1000
+        )
+        {
+          robot_vx = 0;
+        }
+        if((cur_y - ref_y) < 1000
+        && (cur_y - ref_y) > -1000
+        )
+        {
+          robot_vy = 0;
+        }
       }
       else
       {
         robot_vx = robot_vy = 0;
         state = 0;
         /* Bei Yong Fang An*/
-        // enter_time = time;
-        // state = 3;
+        enter_time = time;
+        state = 3;
       }
     }
     /* Bei Yong Fang An*/
-    // else if(state == 3)
-    // {
-    //   if ((enter_time - time)<500)
-    //   {
-    //     robot_vx = robot_vy = 0; 
-    //     /* code */
-    //   }
-    //   else
-    //   {
-    //     state = 0;
-    //   }
-    // }
+    else if(state == 3)
+    {
+      if ((enter_time - time)<500)
+      {
+        robot_vx = robot_vy = 0; 
+        /* code */
+      }
+      else
+      {
+        state = 0;
+      }
+    }
     else
     {
       WTR_MotionPlan_Update(&robot_vx,&robot_vy,time - enter_time,ref_x,ref_y,state); 
