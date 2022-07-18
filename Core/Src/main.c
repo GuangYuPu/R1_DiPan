@@ -331,11 +331,11 @@ int main(void)
 		send();
 		
     // robot_rot = -((float)(Rightx - 2048))/1000;
-    HWT_init += ((float)(Rightx - 2048))/100;
+    HWT_init += (int)((float)(Rightx - 2048))/25;
 		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d,%d\n",(int)(index_r),(int)(index_b),(int)(zone));
+printf("pgy:%d,%d,%d\n",(int)(Leftx),(int)(Lefty),(int)(zone));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -562,27 +562,27 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     else if(state == 4)
     {
-      if((enter_time - time)<800)
+      if((time - enter_time)<300)
       {
         robot_vx = robot_vy = 0;
       }
       else 
       {
         index_r++;
-        if(index_r>5) index_r -= 5;
+        if(index_r>5) index_r -= 6;
         state = 0;
       }
     }
     else if(state == 5)
     {
-      if((enter_time - time)<800)
+      if((time - enter_time)<300)
       {
         robot_vx = robot_vy = 0;
       }
       else 
       {
         index_b++;
-        if(index_b>5) index_b -= 5;
+        if(index_b>5) index_b -= 6;
         state = 0;
       }
     }
