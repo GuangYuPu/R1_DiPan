@@ -58,31 +58,31 @@ float Caculate_t0(float pos_dis)
 void MotionPlan_state_update(State_t *state_t,uint32_t t_ms,float tx)
 {
     float t = ((float)(t_ms))/1000.f;
-    if((t>0)&&(t<t0))
+    if((t>0)&&(t<=t0))
     {
         state_t->A = a0*t;
         state_t->V = (1.0/2)*a0*t*t;
         state_t->P = (1.0/6)*a0*t*t*t;
     }
-    else if((t>t0)&&(t<2*t0))
+    else if((t>t0)&&(t<=2*t0))
     {
         state_t->A = -a0*(t-2*t0);
         state_t->V = -(a0*(t*t - 4*t*t0 + 2*t0*t0))/2;
         state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
     }
-    else if((t>2*t0)&&(t<(2*t0+tx)))
+    else if((t>2*t0)&&(t<=(2*t0+tx)))
     {
         state_t->A = 0;
         state_t->V = a0*t0*t0;
         state_t->P = a0*t0*t0*t - a0*t0*t0*t0;
     }
-    else if((t>2*t0+tx)&&(t<(3*t0+tx)))
+    else if((t>2*t0+tx)&&(t<=(3*t0+tx)))
     {
         state_t->A = -a0*(t-2*t0-tx);
         state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
         state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
     }
-    else if((t>3*t0+tx)&&(t<(4*t0+tx)))
+    else if((t>3*t0+tx)&&(t<=(4*t0+tx)))
     {
         state_t->A = a0*(t-4*t0-tx);
         state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
@@ -96,31 +96,31 @@ void MotionPlan_state_update_t0(State_t *state_t,uint32_t t_ms,float t0)
 {
     float t = ((float)(t_ms))/1000.f;
     float tx = 0;
-    if((t>0)&&(t<t0))
+    if((t>0)&&(t<=t0))
     {
         state_t->A = a0*t;
         state_t->V = (1.0/2)*a0*t*t;
         state_t->P = (1.0/6)*a0*t*t*t;
     }
-    else if((t>t0)&&(t<2*t0))
+    else if((t>t0)&&(t<=2*t0))
     {
         state_t->A = -a0*(t-2*t0);
         state_t->V = -(a0*(t*t - 4*t*t0 + 2*t0*t0))/2;
         state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
     }
-    else if((t>2*t0)&&(t<(2*t0+tx)))
+    else if((t>2*t0)&&(t<=(2*t0+tx)))
     {
         state_t->A = 0;
         state_t->V = a0*t0*t0;
         state_t->P = a0*t0*t0*t - a0*t0*t0*t0;
     }
-    else if((t>2*t0+tx)&&(t<(3*t0+tx)))
+    else if((t>2*t0+tx)&&(t<=(3*t0+tx)))
     {
         state_t->A = -a0*(t-2*t0-tx);
         state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
         state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
     }
-    else if((t>3*t0+tx)&&(t<(4*t0+tx)))
+    else if((t>3*t0+tx)&&(t<=(4*t0+tx)))
     {
         state_t->A = a0*(t-4*t0-tx);
         state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
@@ -196,6 +196,7 @@ void WTR_MotionPlan_Update(float *vx,float *vy,uint32_t t_ms,float ref_x,float r
     MotionPlan_Caculate(vx,statex_t_ref.V,statex_t_ref.P,statex_t_now.V,statex_t_now.P);
     MotionPlan_Caculate(vy,statey_t_ref.V,statey_t_ref.P,statey_t_now.V,statey_t_now.P);
   }
+
   else
   {
     ltxlast = statex_t_now.P;

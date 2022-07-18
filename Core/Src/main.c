@@ -328,10 +328,10 @@ int main(void)
 		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
-		if(time<3000) HWT_init = HWT_BIAS;
+		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d\n",(int)(HWT_BIAS),(int)(HWT_init));
+printf("pgy:%d,%d\n",(int)(ADS1256_diff_data[3]),(int)(ADS1256_diff_data[0]));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -403,8 +403,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       switch (index_r)
       {
         case 0:
-        ref_x = Ref_x[0];
-        ref_y = Ref_y[0];
+        ref_x = Ref_x[1];
+        ref_y = Ref_y[1];
         region = 1;
         break;
         case 1:
@@ -484,11 +484,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         break;
       }
 		}
-	
+
+    if(button_A == 1 && state == 0)
+	  {
+      enter_time = time;
+      state = 3;
+      ref_x = Ref_x[0];
+      ref_y = Ref_y[0];
+      region = 0;
+    }
     //FSM TRANS END
 
     //FSM DO BEGIN
-    if((state == 1) || (state == 2))
+    if((state == 1) || (state == 2) || (state == 3))
     {
       if((((float)(ADS1256_diff_data[3]))/547098.f - ref_x) > 0.01f
       || (((float)(ADS1256_diff_data[0]))/547098.f - ref_y) > 0.01f
@@ -525,6 +533,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     // {
     //   if ((enter_time - time)<500)
     //   {
+    //     robot_vx = robot_vy = 0; 
     //     /* code */
     //   }
     //   else

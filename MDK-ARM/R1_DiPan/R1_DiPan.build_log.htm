@@ -62,10 +62,48 @@ compiling main.c...
 ../Core/Src/main.c(197): warning:  #174-D: expression has no effect
       if(index_b>5) index_b - 5;
 ../Core/Src/main.c: 15 warnings, 0 errors
+compiling Wtr_MotionPlan.c...
+..\MotionPlan\Wtr_MotionPlan.h(56): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\MotionPlan\Wtr_MotionPlan.c(32): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          if((ltylast-LTy)>0.1) xy_t->XY_y += 0.15;
+..\MotionPlan\Wtr_MotionPlan.c(32): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          if((ltylast-LTy)>0.1) xy_t->XY_y += 0.15;
+..\MotionPlan\Wtr_MotionPlan.c(33): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          if((ltylast-LTy)<-0.1) xy_t->XY_y -= 0.15;
+..\MotionPlan\Wtr_MotionPlan.c(54): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+      t0 = pow((pos_dis*0.5/a0),1.0/3);
+..\MotionPlan\Wtr_MotionPlan.c(71): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
+..\MotionPlan\Wtr_MotionPlan.c(71): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
+..\MotionPlan\Wtr_MotionPlan.c(82): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
+..\MotionPlan\Wtr_MotionPlan.c(83): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
+..\MotionPlan\Wtr_MotionPlan.c(83): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
+..\MotionPlan\Wtr_MotionPlan.c(88): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
+..\MotionPlan\Wtr_MotionPlan.c(109): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
+..\MotionPlan\Wtr_MotionPlan.c(109): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -a0*t0*t0*t + a0*t0*t0*t0/3.0 + a0*t0*t*t - a0*t*t*t/6.0;
+..\MotionPlan\Wtr_MotionPlan.c(120): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->V = -(1.0/2)*a0*t*t + (2*a0*t0+a0*tx)*t - (a0*t0*t0 + 0.5*a0*tx*tx + 2*a0*t0*tx);
+..\MotionPlan\Wtr_MotionPlan.c(121): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
+..\MotionPlan\Wtr_MotionPlan.c(121): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->P = -(1.0/6)*a0*t*t*t + (t0 + 0.5*tx)*a0*t*t	 - (t0*t0+0.5*tx*tx+2*t0*tx)*a0*t + a0*((1.0/6)*tx*tx*tx+(1.0/3)*t0*t0*t0+2*tx*t0*t0+t0*tx*tx);
+..\MotionPlan\Wtr_MotionPlan.c(126): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+          state_t->V = (1.0/2)*a0*t*t - a0*(4*t0 + tx)*t + a0*(8*t0*t0+4*t0*tx+0.5*tx*tx);
+..\MotionPlan\Wtr_MotionPlan.c(215): warning:  #1-D: last line of file ends without a newline
+  }
+..\MotionPlan\Wtr_MotionPlan.c: 18 warnings, 0 errors
 linking...
-Program Size: Code=26304 RO-data=600 RW-data=200 ZI-data=3352  
+Program Size: Code=26348 RO-data=604 RW-data=200 ZI-data=3352  
 FromELF: creating hex file...
-"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 16 Warning(s).
+"R1_DiPan\R1_DiPan.axf" - 0 Error(s), 34 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -89,7 +127,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
