@@ -184,32 +184,23 @@ int main(void)
 		
     ADS1256_UpdateDiffData();
 		
-    cur_x = ADS1256_diff_data[3];
-    cur_y = ADS1256_diff_data[0];
-    if(((cur_x>cur_gate[0])&&(cur_x<cur_gate[1])) || ((cur_x>cur_gate[2])&&(cur_x<cur_gate[3])))
-    {
-      cur_y += gate_y;
-    }
+    // cur_x = ADS1256_diff_data[3];
+    // cur_y = ADS1256_diff_data[0];
+    // if(((cur_x>cur_gate[0])&&(cur_x<cur_gate[1])) || ((cur_x>cur_gate[2])&&(cur_x<cur_gate[3])))
+    // {
+    //   cur_y += gate_y;
+    // }
 
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
 	  robot_vy = ((float)(2048 - Lefty))/1000;
-    if(Bias_mpu>3 || Bias_mpu<-3) robot_rot = k_bias*Bias_mpu;
-	  // robot_rot = -((float)(Rightx - 2048))/1000;
+    if(Bias_mpu>2 || Bias_mpu<-2) robot_rot = k_bias*Bias_mpu;
 		else 
     {robot_rot = 0;}
-    
-      if(Bias_mpu>3 || Bias_mpu<-3)robot_rot = (k_bias)*Bias_mpu;
-    }
-
-    if((button_G_last > 0)&&(button_G == 0)) index_r++;
-    if(index_r>5) index_r - 5;
-    if((button_H_last > 0)&&(button_H == 0)) index_b++;
-    if(index_b>5) index_b - 5;
   
 		if(robot_rot>3) robot_rot = 1;
-		if(robot_vx>2) robot_vx = 1;
-		if(robot_vy>2) robot_vy = 1;
+		if(robot_vx>2) robot_vx = 2;
+		if(robot_vy>2) robot_vy = 2;
 
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
@@ -339,10 +330,12 @@ int main(void)
 		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
+    // robot_rot = -((float)(Rightx - 2048))/1000;
+    HWT_init += ((float)(Rightx - 2048))/100;
 		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d\n",(int)(ADS1256_diff_data[3]),(int)(ADS1256_diff_data[0]));
+printf("pgy:%d,%d,%d\n",(int)(index_r),(int)(index_b),(int)(zone));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -350,6 +343,7 @@ printf("pgy:%d,%d\n",(int)(ADS1256_diff_data[3]),(int)(ADS1256_diff_data[0]));
 		wheel[0].speed = 	wheel[1].speed = 	wheel[2].speed = 	wheel[3].speed = 0; 
   }
   /* USER CODE END 3 */
+}
 }
 
 /**
@@ -409,8 +403,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		//FSM TRANS BEGIN
 		if(button_E == 1 && button_D == 1 && state == 0)
 		{
-			enter_time = time;
-      state = 1;
+			// enter_time = time;
+      // state = 1;
       switch (index_r)
       {
         case 0:
@@ -455,8 +449,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     } 
       if(button_F == 1 && button_D == 1 && state == 0)
 		{
-			enter_time = time;
-      state = 2;
+			// enter_time = time;
+      // state = 2;
       switch (index_b)
       {
         case 0:
@@ -502,11 +496,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
     if(button_A == 1 && state == 0)
 	  {
-      enter_time = time;
-      state = 3;
+      // enter_time = time;
+      // state = 3;
       ref_x = Ref_x[0];
       ref_y = Ref_y[0];
       region = 0;
+    }
+    if(button_G == 1 && state == 0)
+	  {
+      enter_time = time;
+      state = 4;
+    }
+    if(button_H == 1 && state == 0)
+	  {
+      enter_time = time;
+      state = 5;
     }
     //FSM TRANS END
 
@@ -539,8 +543,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         robot_vx = robot_vy = 0;
         state = 0;
         /* Bei Yong Fang An*/
-        enter_time = time;
-        state = 3;
+        // enter_time = time;
+        // state = 3;
       }
     }
     /* Bei Yong Fang An*/
@@ -553,6 +557,32 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       }
       else
       {
+        state = 0;
+      }
+    }
+    else if(state == 4)
+    {
+      if((enter_time - time)<800)
+      {
+        robot_vx = robot_vy = 0;
+      }
+      else 
+      {
+        index_r++;
+        if(index_r>5) index_r -= 5;
+        state = 0;
+      }
+    }
+    else if(state == 5)
+    {
+      if((enter_time - time)<800)
+      {
+        robot_vx = robot_vy = 0;
+      }
+      else 
+      {
+        index_b++;
+        if(index_b>5) index_b -= 5;
         state = 0;
       }
     }
