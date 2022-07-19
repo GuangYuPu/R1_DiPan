@@ -69,6 +69,7 @@ int Ref_y[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 int ifRecv = 0;
 int ifRecv_mpu = 0;
 int16_t HWT_init = 0;
+int16_t HWT_init_lsat = 0;
 
 uint32_t time = 0;
 uint32_t enter_time = 0;
@@ -92,7 +93,7 @@ float robot_rot = 0;
 float robot_vx_last = 0;
 float robot_vy_last = 0;
 float robot_rot_last = 0;
-float k_bias = 0.1;
+float k_bias = 0.15;
 
 
 int32_t Bias_mpu = 0;
@@ -197,6 +198,7 @@ int main(void)
     robot_vx_last = robot_vx;
     robot_vy_last = robot_vy;
     robot_rot_last = robot_rot;
+    HWT_init_lsat = HWT_init;
 
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
@@ -216,13 +218,19 @@ int main(void)
 //    if(robot_rot-robot_rot_last>450 || robot_rot - robot_rot_last<-450) robot_rot = robot_rot_last;
 //    else if(robot_rot-robot_rot_last>300 || robot_rot - robot_rot_last<-300) robot_rot = 0.5f*(robot_rot_last+robot_rot);
 
-		if(robot_rot>1) robot_rot = 1;
-    if(robot_rot<-1) robot_rot = -1;
+		if(robot_rot>2) robot_rot = 2;
+    if(robot_rot<-2) robot_rot = -2;
 		if(robot_vx>2) robot_vx = 2;
     if(robot_vx<-2) robot_vx = -2;
 		if(robot_vy>2) robot_vy = 2;
     if(robot_vy<-2) robot_vy = -2;
 
+    if(ADS1256_diff_data[0]<212000)
+    {
+      robot_vx*=0.3f;
+      robot_vy*=0.3f;
+    }
+    if((ADS1256_diff_data[0]<115000)&&(robot_vy<0)) robot_vy = 0;
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
 		speedServo(wheel[0].speed,&hDJI[0]);
@@ -352,11 +360,12 @@ int main(void)
 		send();
 		
     // robot_rot = -((float)(Rightx - 2048))/1000;
-    HWT_init += (int16_t)((float)(Rightx - 2048))/20;
+    HWT_init += (int16_t)((float)(Rightx - 2048))/25;
+    if(HWT_init_lsat-HWT_init>500 || HWT_init_lsat-HWT_init<-500) HWT_init = HWT_init_lsat;
 		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d,%d,%d,%d\n",(int)(HWT_init),(int)(Rightx),(int)(robot_rot*1000),(int)(index_r),(int)(index_b));
+printf("pgy:%d,%d,%d,%d,%d\n",(int)(HWT_init),(int)(HWT_BIAS),(int)(ADS1256_diff_data[3]),(int)(ADS1256_diff_data[0]),(int)(index_b));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
