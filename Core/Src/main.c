@@ -89,6 +89,9 @@ uint8_t she_qiu = 0;
 float robot_vx = 0;
 float robot_vy = 0;
 float robot_rot = 0;
+float robot_vx_last = 0;
+float robot_vy_last = 0;
+float robot_rot_last = 0;
 float k_bias = 0.1;
 
 
@@ -191,6 +194,10 @@ int main(void)
     //   cur_y += gate_y;
     // }
 
+    robot_vx_last = robot_vx;
+    robot_vy_last = robot_vy;
+    robot_rot_last = robot_rot;
+
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
     if(robot_vx>0 && robot_vx<1) robot_vx = robot_vx*robot_vx;
@@ -202,9 +209,19 @@ int main(void)
 		else 
     {robot_rot = 0;}
   
-		if(robot_rot>3) robot_rot = 1;
+    if(robot_vx-robot_vx_last>450 || robot_vx - robot_vx_last<-450) robot_vx = robot_vx_last;
+    else if(robot_vx-robot_vx_last>300 || robot_vx - robot_vx_last<-300) robot_vx = 0.5f*(robot_vx_last+robot_vx);
+    if(robot_vy-robot_vy_last>450 || robot_vx - robot_vy_last<-450) robot_vx = robot_vy_last;
+    else if(robot_vy-robot_vy_last>300 || robot_vx - robot_vy_last<-300) robot_vy = 0.5f*(robot_vy_last+robot_vy);
+//    if(robot_rot-robot_rot_last>450 || robot_rot - robot_rot_last<-450) robot_rot = robot_rot_last;
+//    else if(robot_rot-robot_rot_last>300 || robot_rot - robot_rot_last<-300) robot_rot = 0.5f*(robot_rot_last+robot_rot);
+
+		if(robot_rot>1) robot_rot = 1;
+    if(robot_rot<-1) robot_rot = -1;
 		if(robot_vx>2) robot_vx = 2;
+    if(robot_vx<-2) robot_vx = -2;
 		if(robot_vy>2) robot_vy = 2;
+    if(robot_vy<-2) robot_vy = -2;
 
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
@@ -335,11 +352,11 @@ int main(void)
 		send();
 		
     // robot_rot = -((float)(Rightx - 2048))/1000;
-    HWT_init += (int)((float)(Rightx - 2048))/20;
+    HWT_init += (int16_t)((float)(Rightx - 2048))/20;
 		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d,%d\n",(int)(robot_vx*1000),(int)(robot_vy*1000),(int)(robot_rot*1000));
+printf("pgy:%d,%d,%d,%d,%d\n",(int)(HWT_init),(int)(Rightx),(int)(robot_rot*1000),(int)(index_r),(int)(index_b));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -566,10 +583,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     else if(state == 4)
     {
-      if((time - enter_time)<300)
+      if((time - enter_time)<175)
       {
+        HAL_GPIO_WritePin(GPIOD,GPIO_PIN_7,GPIO_PIN_SET);
         robot_vx = robot_vy = 0;
       }
+//      else if((time - enter_time)<200)
+//      {
+//        HAL_GPIO_WritePin(GPIOD,GPIO_PIN_7,GPIO_PIN_RESET);
+//        robot_vx = robot_vy = 0;
+//      }
+//      else if((time - enter_time)<300)
+//      {
+//        HAL_GPIO_WritePin(GPIOD,GPIO_PIN_7,GPIO_PIN_SET);
+//        robot_vx = robot_vy = 0;
+//      }
       else 
       {
         index_r++;
@@ -579,10 +607,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     else if(state == 5)
     {
-      if((time - enter_time)<300)
+      if((time - enter_time)<175)
       {
+        HAL_GPIO_WritePin(GPIOD,GPIO_PIN_7,GPIO_PIN_SET);
         robot_vx = robot_vy = 0;
       }
+//      else if((time - enter_time)<200)
+//      {
+//        HAL_GPIO_WritePin(GPIOD,GPIO_PIN_7,GPIO_PIN_RESET);
+//        robot_vx = robot_vy = 0;
+//      }
+//      else if((time - enter_time)<300)
+//      {
+//        HAL_GPIO_WritePin(GPIOD,GPIO_PIN_7,GPIO_PIN_SET);
+//        robot_vx = robot_vy = 0;
+//      }
       else 
       {
         index_b++;
