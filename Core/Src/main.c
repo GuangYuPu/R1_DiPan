@@ -68,7 +68,7 @@ int Ref_y[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 int ifRecv = 0;
 int ifRecv_mpu = 0;
-int32_t HWT_init = 0;
+int16_t HWT_init = 0;
 
 uint32_t time = 0;
 uint32_t enter_time = 0;
@@ -193,7 +193,11 @@ int main(void)
 
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
+    if(robot_vx>0 && robot_vx<1) robot_vx = robot_vx*robot_vx;
+    else if(robot_vx>-1 && robot_vx<0) robot_vx = -robot_vx*robot_vx;
 	  robot_vy = ((float)(2048 - Lefty))/1000;
+    if(robot_vy>0 && robot_vy<1) robot_vy = robot_vy*robot_vy;
+    else if(robot_vy>-1 && robot_vy<0) robot_vy = -robot_vy*robot_vy;
     if(Bias_mpu>2 || Bias_mpu<-2) robot_rot = k_bias*Bias_mpu;
 		else 
     {robot_rot = 0;}
@@ -331,11 +335,11 @@ int main(void)
 		send();
 		
     // robot_rot = -((float)(Rightx - 2048))/1000;
-    HWT_init += (int)((float)(Rightx - 2048))/25;
+    HWT_init += (int)((float)(Rightx - 2048))/20;
 		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d,%d\n",(int)(Leftx),(int)(Lefty),(int)(zone));
+printf("pgy:%d,%d,%d\n",(int)(robot_vx*1000),(int)(robot_vy*1000),(int)(robot_rot*1000));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
