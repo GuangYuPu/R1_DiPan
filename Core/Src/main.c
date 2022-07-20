@@ -38,6 +38,7 @@
 #include "Wtr_MotionPlan.h"
 #include "main.h"
 #include "stdio.h"  
+#include "wtr_mavlink.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,8 +99,9 @@ float robot_vy_last = 0;
 float robot_rot_last = 0;
 float k_bias = 0.15;
 
-
 int32_t Bias_mpu = 0;
+
+mavlink_controller_t ControllerData = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -174,7 +176,10 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim5);
 	
 	nrf_Transmit_init();
-	nrf_receive_init();
+	// nrf_receive_init();
+
+  WTR_MAVLink_Init(&huart1,MAVLINK_COMM_0);
+  WTR_MAVLink_RcvStart(MAVLINK_COMM_0);
 
 	mpu6050_init();
 	HWT_init = HWT_BIAS;
@@ -190,8 +195,21 @@ int main(void)
       time = 0;
 		}
 		
-     ADS1256_UpdateDiffData();
+    ADS1256_UpdateDiffData();
     
+    Leftx = ControllerData.left_x + 2048;
+    Rightx = ControllerData.right_x + 2048;
+    Lefty = ControllerData.left_y + 2048;
+    Righty = ControllerData.right_y + 2048;
+    button_A = ControllerData.buttons & (1<<1);
+    button_B = ControllerData.buttons & (1<<1);
+    button_C = ControllerData.buttons & (1<<1);
+    button_D = ControllerData.buttons & (1<<1);
+    button_E = ControllerData.buttons & (1<<1);
+    button_F = ControllerData.buttons & (1<<1);
+    button_G = ControllerData.buttons & (1<<1);
+    button_H = ControllerData.buttons & (1<<1);
+
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
     if(robot_vx>0 && robot_vx<1) robot_vx = robot_vx*robot_vx;
@@ -352,7 +370,6 @@ int main(void)
   }
   /* USER CODE END 3 */
 }
-
 
 /**
   * @brief System Clock Configuration
@@ -642,13 +659,37 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     if(huart->Instance == huart1.Instance)
     {
 			  ifRecv = 1;
-        nrf_decode();
+        WTR_MAVLink_UART_RxCpltCallback(&huart1);
     }
 		if(huart->Instance == huart3.Instance)
 		{
         ifRecv_mpu = 1;
 				mpu6050_decode();
 		}
+}
+
+/**
+ * @brief MAVLink 消息接收完毕回调函数，需要在这里调用解码函数
+ *
+ * @param msg
+ * @return void
+ */
+void WTR_MAVLink_Msg_RxCpltCallback(mavlink_message_t *msg)
+{
+	switch (msg->msgid)
+	{
+	case 1:
+		// id = 1 的消息对应的解码函数
+    mavlink_msg_controller_decode(msg,&ControllerData);
+		break;
+
+	case 2:
+		// id = 2 的消息对应的解码函数
+		break;
+	// ......
+	default:
+		break;
+	}
 }
 /* USER CODE END 4 */
 

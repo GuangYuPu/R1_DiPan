@@ -149,7 +149,8 @@
   },
   "uploader": "OpenOCD",
   "srcDirs": [
-    "./.eide/deps"
+    "./.eide/deps",
+    "./mavlink"
   ],
   "virtualFolder": {
     "name": "<virtual_root>",
