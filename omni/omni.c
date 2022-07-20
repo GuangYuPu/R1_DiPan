@@ -1,7 +1,7 @@
 #include "omni.h"
 #include <math.h>
 
-#define PI 3.141592653589793
+#define PI 3.14
 #define OMNIA_D 0.15
 
 Wheel wheel[4] = {0};
@@ -27,10 +27,10 @@ void Kine_Init(float distance_x, float distance_y, float o_offset_x, float o_off
     {
         r[i] = sqrt(pow(wheel[i].o_pos_x,2)+pow(wheel[i].o_pos_y,2));
     }
-    for (int j = 0; j < 3; j++)
-    {
-        r[j] = 0.2;
-    }
+    // for (int j = 0; j < 3; j++)
+    // {
+    //     r[j] = 0.2;
+    // }
 }
 
 void Kine_SetSpeed_40(Wheel *wheel,float robot_vx, float robot_vy, float robot_rot)

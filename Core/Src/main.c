@@ -204,21 +204,23 @@ int main(void)
 
   //fei xian xing chu li
     if(state == 0){
-		robot_vx = ((float)(2048 - Leftx))/1000;
+		robot_vx = ((float)(2048 - Rightx))/1000;
     if(robot_vx>0 && robot_vx<1) robot_vx = robot_vx*robot_vx;
     else if(robot_vx>-1 && robot_vx<0) robot_vx = -robot_vx*robot_vx;
-	  robot_vy = ((float)(2048 - Lefty))/1000;
+	  robot_vy = ((float)(2048 - Righty))/1000;
     if(robot_vy>0 && robot_vy<1) robot_vy = robot_vy*robot_vy;
     else if(robot_vy>-1 && robot_vy<0) robot_vy = -robot_vy*robot_vy;
-  
-    if(Bias_mpu>2 || Bias_mpu<-2) robot_rot = k_bias*Bias_mpu;
-		else 
-    {robot_rot = 0;}
+    robot_rot = -((float)(Leftx - 2048))/1000;
+    if(robot_rot>0 && robot_rot<1) robot_rot = robot_rot*robot_rot;
+    else if(robot_rot>-1 && robot_rot<0) robot_rot = -robot_rot*robot_rot;
+    // if(Bias_mpu>2 || Bias_mpu<-2) robot_rot = k_bias*Bias_mpu;
+		// else 
+    // {robot_rot = 0;}
   //lian xu xing jian ce
-    if(robot_vx-robot_vx_last>450 || robot_vx - robot_vx_last<-450) robot_vx = robot_vx_last;
-    else if(robot_vx-robot_vx_last>300 || robot_vx - robot_vx_last<-300) robot_vx = 0.5f*(robot_vx_last+robot_vx);
-    if(robot_vy-robot_vy_last>450 || robot_vx - robot_vy_last<-450) robot_vx = robot_vy_last;
-    else if(robot_vy-robot_vy_last>300 || robot_vx - robot_vy_last<-300) robot_vy = 0.5f*(robot_vy_last+robot_vy);
+  //   if(robot_vx-robot_vx_last>450 || robot_vx - robot_vx_last<-450) robot_vx = robot_vx_last;
+  //   else if(robot_vx-robot_vx_last>300 || robot_vx - robot_vx_last<-300) robot_vx = 0.5f*(robot_vx_last+robot_vx);
+  //   if(robot_vy-robot_vy_last>450 || robot_vx - robot_vy_last<-450) robot_vx = robot_vy_last;
+  //   else if(robot_vy-robot_vy_last>300 || robot_vx - robot_vy_last<-300) robot_vy = 0.5f*(robot_vy_last+robot_vy);
   //xian fu
 		if(robot_rot>2) robot_rot = 2;
     if(robot_rot<-2) robot_rot = -2;
@@ -361,14 +363,13 @@ int main(void)
 		nrfDataBag.she_qiu = she_qiu;
 		send();
 		
-    // robot_rot = -((float)(Rightx - 2048))/1000;
-    HWT_init += (int16_t)((float)(Rightx - 2048))/20;
-    if(HWT_init_lsat-HWT_init>500 || HWT_init_lsat-HWT_init<-500) HWT_init = HWT_init_lsat;
-		if(time<500) HWT_init = HWT_BIAS;
-		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
+    // HWT_init += (int16_t)((float)(Rightx - 2048))/20;
+    // if(HWT_init_lsat-HWT_init>500 || HWT_init_lsat-HWT_init<-500) HWT_init = HWT_init_lsat;
+		// if(time<500) HWT_init = HWT_BIAS;
+		// Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
 
-if(counter%10 == 0) printf("pgy:%d,%d\n",(int)(hDJI[0].speedPID.ref*100),(int)(hDJI[0].speedPID.fdb*100));
+if(counter%10 == 0) printf("pgy:%d,%d,%d\n",(int)(hDJI[0].speedPID.ref*100),(int)(hDJI[0].speedPID.fdb*100),(int)(robot_vx*10000));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
