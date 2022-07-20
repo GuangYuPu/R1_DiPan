@@ -375,7 +375,7 @@ if(counter%10 == 0) printf("pgy:%d,%d,%d\n",(int)(hDJI[0].speedPID.ref*100),(int
     /* USER CODE BEGIN 3 */
 		HAL_Delay(1);
     counter++;
-		wheel[0].speed = 	wheel[1].speed = 	wheel[2].speed = 	wheel[3].speed = 0; 
+		// wheel[0].speed = 	wheel[1].speed = 	wheel[2].speed = 	wheel[3].speed = 0; 
   }
   /* USER CODE END 3 */
 }
