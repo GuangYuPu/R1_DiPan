@@ -74,6 +74,8 @@ int16_t HWT_init_lsat = 0;
 uint32_t time = 0;
 uint32_t enter_time = 0;
 
+uint32_t counter = 0;
+
 int b = 0;
 int a = 0;
 
@@ -200,6 +202,7 @@ int main(void)
     robot_rot_last = robot_rot;
     HWT_init_lsat = HWT_init;
 
+  //fei xian xing chu li
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
     if(robot_vx>0 && robot_vx<1) robot_vx = robot_vx*robot_vx;
@@ -207,24 +210,23 @@ int main(void)
 	  robot_vy = ((float)(2048 - Lefty))/1000;
     if(robot_vy>0 && robot_vy<1) robot_vy = robot_vy*robot_vy;
     else if(robot_vy>-1 && robot_vy<0) robot_vy = -robot_vy*robot_vy;
+  
     if(Bias_mpu>2 || Bias_mpu<-2) robot_rot = k_bias*Bias_mpu;
 		else 
     {robot_rot = 0;}
-  
+  //lian xu xing jian ce
     if(robot_vx-robot_vx_last>450 || robot_vx - robot_vx_last<-450) robot_vx = robot_vx_last;
     else if(robot_vx-robot_vx_last>300 || robot_vx - robot_vx_last<-300) robot_vx = 0.5f*(robot_vx_last+robot_vx);
     if(robot_vy-robot_vy_last>450 || robot_vx - robot_vy_last<-450) robot_vx = robot_vy_last;
     else if(robot_vy-robot_vy_last>300 || robot_vx - robot_vy_last<-300) robot_vy = 0.5f*(robot_vy_last+robot_vy);
-//    if(robot_rot-robot_rot_last>450 || robot_rot - robot_rot_last<-450) robot_rot = robot_rot_last;
-//    else if(robot_rot-robot_rot_last>300 || robot_rot - robot_rot_last<-300) robot_rot = 0.5f*(robot_rot_last+robot_rot);
-
+  //xian fu
 		if(robot_rot>2) robot_rot = 2;
     if(robot_rot<-2) robot_rot = -2;
 		if(robot_vx>2) robot_vx = 2;
     if(robot_vx<-2) robot_vx = -2;
 		if(robot_vy>2) robot_vy = 2;
     if(robot_vy<-2) robot_vy = -2;
-
+  //qu qiu you hua
     if(ADS1256_diff_data[0]<212000)
     {
       robot_vx*=0.3f;
@@ -233,11 +235,11 @@ int main(void)
     if((ADS1256_diff_data[0]<115000)&&(robot_vy<0)) robot_vy = 0;
 		Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
 		
-		speedServo(wheel[0].speed,&hDJI[0]);
+    speedServo(wheel[0].speed,&hDJI[0]);
 		speedServo(wheel[1].speed,&hDJI[1]);
 		speedServo(wheel[2].speed,&hDJI[2]);
 		speedServo(wheel[3].speed,&hDJI[3]);
-		
+
 		CanTransmit_DJI_1234(&hcan1,
 															 hDJI[0].speedPID.output,
 															 hDJI[1].speedPID.output,
@@ -360,16 +362,18 @@ int main(void)
 		send();
 		
     // robot_rot = -((float)(Rightx - 2048))/1000;
-    HWT_init += (int16_t)((float)(Rightx - 2048))/25;
+    HWT_init += (int16_t)((float)(Rightx - 2048))/20;
     if(HWT_init_lsat-HWT_init>500 || HWT_init_lsat-HWT_init<-500) HWT_init = HWT_init_lsat;
 		if(time<500) HWT_init = HWT_BIAS;
 		Bias_mpu = ((float)HWT_BIAS - (float)HWT_init)/100;
 
-printf("pgy:%d,%d,%d,%d,%d\n",(int)(HWT_init),(int)(HWT_BIAS),(int)(ADS1256_diff_data[3]),(int)(ADS1256_diff_data[0]),(int)(index_b));
+
+if(counter%10 == 0) printf("pgy:%d,%d\n",(int)(hDJI[0].speedPID.ref*100),(int)(hDJI[0].speedPID.fdb*100));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 		HAL_Delay(1);
+    counter++;
 		wheel[0].speed = 	wheel[1].speed = 	wheel[2].speed = 	wheel[3].speed = 0; 
   }
   /* USER CODE END 3 */
@@ -427,7 +431,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if (htim == (&htim4))
 	{
 		time++;
-	}
+  }
   if (htim == (&htim5))
 	{
 		//FSM TRANS BEGIN
