@@ -220,7 +220,7 @@ void ADS1256_Init(void)
 	 * @brief A/D Data Rate
 	 * 默认值：30,000SPS
 	 */
-	ADS1256_WREG(ADS1256_DRATE,ADS1256_DRATE_1000);
+	ADS1256_WREG(ADS1256_DRATE,ADS1256_DRATE_30000);
 
 	/**
 	 * @brief GPIO Control Register
