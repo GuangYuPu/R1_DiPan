@@ -289,7 +289,6 @@ int main(void)
       robot_vx*=0.3f;
       robot_vy*=0.3f;
     }
-    if((ADS1256_diff_data[0]<115000)&&(robot_vy<0)) robot_vy = 0;
     }
     Kine_SetSpeed(robot_vx,robot_vy,robot_rot);
     
