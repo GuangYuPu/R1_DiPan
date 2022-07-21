@@ -181,8 +181,8 @@ int main(void)
   WTR_MAVLink_Init(&huart1,MAVLINK_COMM_0);
   WTR_MAVLink_RcvStart(MAVLINK_COMM_0);
 
-	mpu6050_init();
-	HWT_init = HWT_BIAS;
+	// mpu6050_init();
+	// HWT_init = HWT_BIAS;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -197,18 +197,74 @@ int main(void)
 		
     ADS1256_UpdateDiffData();
     
-    Leftx = ControllerData.left_x + 2048;
-    Rightx = ControllerData.right_x + 2048;
-    Lefty = ControllerData.left_y + 2048;
-    Righty = ControllerData.right_y + 2048;
-    button_A = ControllerData.buttons & (1<<1);
-    button_B = ControllerData.buttons & (1<<1);
-    button_C = ControllerData.buttons & (1<<1);
-    button_D = ControllerData.buttons & (1<<1);
-    button_E = ControllerData.buttons & (1<<1);
-    button_F = ControllerData.buttons & (1<<1);
-    button_G = ControllerData.buttons & (1<<1);
-    button_H = ControllerData.buttons & (1<<1);
+    if(ControllerData.left_x > 100)
+    {
+      Leftx = -ControllerData.left_x - 100 + 2048;
+    }
+    else if (ControllerData.left_x < -100)
+    {
+      Leftx = -ControllerData.left_x + 100 + 2048;
+    }
+    else
+    {
+      Leftx = 2048;
+    }
+
+    if(ControllerData.left_y > 100)
+    {
+      Lefty = -ControllerData.left_y - 100 + 2048;
+    }
+    else if (ControllerData.left_y < -100)
+    {
+      Lefty = -ControllerData.left_y + 100 + 2048;
+    }
+    else
+    {
+      Lefty = 2048;
+    }
+
+    if(ControllerData.right_x > 100)
+    {
+      Rightx = -ControllerData.right_x - 100 + 2048;
+    }
+    else if (ControllerData.right_x < -100)
+    {
+      Rightx = -ControllerData.right_x + 100 + 2048;
+    }
+    else
+    {
+      Rightx = 2048;
+    }
+
+    if(ControllerData.right_y > 100)
+    {
+      Righty = -ControllerData.right_y - 100 + 2048;
+    }
+    else if (ControllerData.right_y < -100)
+    {
+      Righty = -ControllerData.right_y + 100 + 2048;
+    }
+    else
+    {
+      Righty = 2048;
+    }
+
+    // if(ControllerData.left_x>-100 || ControllerData.left_x<100) ControllerData.left_x = 0;
+    // Leftx = ControllerData.left_x + 2048;
+    // if(ControllerData.left_y>-100 || ControllerData.left_y<100) ControllerData.left_y = 0;
+    // Rightx = ControllerData.right_x + 2048;
+    // if(ControllerData.right_x>-100 || ControllerData.right_x<100) ControllerData.right_x = 0;
+    // Lefty = ControllerData.left_y + 2048;
+    // if(ControllerData.right_y>-100 || ControllerData.right_y<100) ControllerData.right_y = 0;
+    // Righty = ControllerData.right_y + 2048;
+    button_A = (ControllerData.buttons & (1<<0))/1;
+    button_B = (ControllerData.buttons & (1<<1))/2;
+    button_C = (ControllerData.buttons & (1<<2))/4;
+    button_D = (ControllerData.buttons & (1<<3))/8;
+    button_E = (ControllerData.buttons & (1<<4))/16;
+    button_F = (ControllerData.buttons & (1<<5))/32;
+    button_G = (ControllerData.buttons & (1<<6))/64;
+    button_H = (ControllerData.buttons & (1<<7))/128;
 
     if(state == 0){
 		robot_vx = ((float)(2048 - Leftx))/1000;
@@ -360,7 +416,7 @@ int main(void)
 		send();
 
 
-    if(counter%5 == 0) printf("pgy:%d,%d,%d,%u\n",(int)(hDJI[2].speedPID.ref*100),(int)(hDJI[2].FdbData.rpm *100),(int)(hDJI[2].speedPID.output*100),(HAL_GetTick() - tick));
+    //if(counter%5 == 0) printf("pgy:%d,%d,%d,%u\n",(int)(hDJI[2].speedPID.ref*100),(int)(hDJI[2].FdbData.rpm *100),(int)(hDJI[2].speedPID.output*100),(HAL_GetTick() - tick));
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -656,16 +712,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    if(huart->Instance == huart1.Instance)
+    if(huart == &huart1)
     {
 			  ifRecv = 1;
         WTR_MAVLink_UART_RxCpltCallback(&huart1);
     }
-		if(huart->Instance == huart3.Instance)
-		{
-        ifRecv_mpu = 1;
-				mpu6050_decode();
-		}
+		// if(huart == &huart3)
+		// {
+    //     ifRecv_mpu = 1;
+		// 		mpu6050_decode();
+		// }
 }
 
 /**

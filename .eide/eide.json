@@ -157,6 +157,11 @@
     "files": [],
     "folders": [
       {
+        "name": "::CMSIS",
+        "files": [],
+        "folders": []
+      },
+      {
         "name": "Application",
         "files": [],
         "folders": [
@@ -209,45 +214,6 @@
             ]
           }
         ]
-      },
-      {
-        "name": "UC",
-        "files": [
-          {
-            "path": "omni/omni.c"
-          },
-          {
-            "path": "UART_COM/nrf_com.c"
-          },
-          {
-            "path": "UC/Caculate.c"
-          },
-          {
-            "path": "UC/DJI.c"
-          },
-          {
-            "path": "UC/wtr_can.c"
-          },
-          {
-            "path": "UC/wtr_uart.c"
-          },
-          {
-            "path": "ADS/ADS1256.c"
-          },
-          {
-            "path": "TITH_time/TITH_time.c"
-          },
-          {
-            "path": "MPU6050/mpu6050.c"
-          },
-          {
-            "path": "MotionPlan/Wtr_MotionPlan.c"
-          },
-          {
-            "path": "UC/uart_printf.c"
-          }
-        ],
-        "folders": []
       },
       {
         "name": "Drivers",
@@ -325,8 +291,42 @@
         ]
       },
       {
-        "name": "::CMSIS",
-        "files": [],
+        "name": "UC",
+        "files": [
+          {
+            "path": "omni/omni.c"
+          },
+          {
+            "path": "UART_COM/nrf_com.c"
+          },
+          {
+            "path": "UC/Caculate.c"
+          },
+          {
+            "path": "UC/DJI.c"
+          },
+          {
+            "path": "UC/wtr_can.c"
+          },
+          {
+            "path": "UC/wtr_uart.c"
+          },
+          {
+            "path": "ADS/ADS1256.c"
+          },
+          {
+            "path": "TITH_time/TITH_time.c"
+          },
+          {
+            "path": "MPU6050/mpu6050.c"
+          },
+          {
+            "path": "MotionPlan/Wtr_MotionPlan.c"
+          },
+          {
+            "path": "UC/uart_printf.c"
+          }
+        ],
         "folders": []
       }
     ]

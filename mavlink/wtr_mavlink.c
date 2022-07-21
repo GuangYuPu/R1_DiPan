@@ -14,6 +14,38 @@
 WTR_MAVLink_handle_t hMAVLink[MAVLINK_COMM_NUM_BUFFERS];
 
 /**
+ * @brief HAL 中的这个函数有 bug，接收和发送互相上锁会冲突，故重写该函数
+ * 
+ * @param huart 
+ * @param pData 
+ * @param Size 
+ * @return HAL_StatusTypeDef 
+ */
+HAL_StatusTypeDef WTR_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
+{
+  /* Check that a Rx process is not already ongoing */
+  if (huart->RxState == HAL_UART_STATE_READY)
+  {
+    if ((pData == NULL) || (Size == 0U))
+    {
+      return HAL_ERROR;
+    }
+
+    /* Process Locked */
+    // __HAL_LOCK(huart);
+
+    /* Set Reception type to Standard reception */
+    huart->ReceptionType = HAL_UART_RECEPTION_STANDARD;
+
+    return (UART_Start_Receive_IT(huart, pData, Size));
+  }
+  else
+  {
+    return HAL_BUSY;
+  }
+}
+
+/**
  * @brief 查找 hMAVLink
  *
  * @param huart
@@ -29,10 +61,10 @@ inline WTR_MAVLink_handle_t *Find_MAVLink_COMM(UART_HandleTypeDef *huart)
 	return NULL;
 }
 
-inline void WTR_MAVLink_Rcv(WTR_MAVLink_handle_t *hmav)
-{
-	HAL_UART_Receive_IT(hmav->huart, &hmav->rx_ch, 1);
-}
+// inline void WTR_MAVLink_Rcv(WTR_MAVLink_handle_t *hmav)
+// {
+// 	HAL_UART_Receive_DMA(hmav->huart, &hmav->rx_ch, 1);
+// }
 
 /**
  * @brief mavlink 串口发送。mavlink 默认有4个通道，在这里指定每个通道用哪个串口发送
@@ -96,7 +128,7 @@ void WTR_MAVLink_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		WTR_MAVLink_Msg_RxCpltCallback(&hmav->msg);
 	}
 
-	HAL_UART_Receive_IT(hmav->huart, &hmav->rx_ch, 1);
+	while(WTR_UART_Receive_IT(hmav->huart, &hmav->rx_ch, 1) != HAL_OK);
 }
 
 /**
@@ -120,5 +152,5 @@ void WTR_MAVLink_Init(UART_HandleTypeDef *huart, mavlink_channel_t chan)
  */
 void WTR_MAVLink_RcvStart(mavlink_channel_t chan)
 {
-	HAL_UART_Receive_IT(hMAVLink[chan].huart, &hMAVLink[chan].rx_ch, 1);
+	while(WTR_UART_Receive_IT(hMAVLink[chan].huart, &hMAVLink[chan].rx_ch, 1) != HAL_OK);
 }
